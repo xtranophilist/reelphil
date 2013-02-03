@@ -1,5 +1,13 @@
 # Django settings for reelphil project.
 
+import os
+import django
+
+# calculated paths for django and the site
+# used as starting points for various other paths
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -11,7 +19,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'reelphil',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'passweird',                  # Not used with sqlite3.
@@ -107,7 +115,8 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/x/templates',
+    os.path.join(SITE_ROOT, 'templates'),
+
 )
 
 INSTALLED_APPS = (
@@ -118,12 +127,21 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'polls',
+    'registration',
+
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+
+# django-registration settings
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
+EMAIL_HOST = 'localhost'
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+LOGIN_REDIRECT_URL = '/'
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
