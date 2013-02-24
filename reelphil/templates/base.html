@@ -1,9 +1,10 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
+        {{ request.user.get_email }}
         {% block content %}{% endblock %}
     </body>
 </html>

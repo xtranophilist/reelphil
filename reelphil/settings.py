@@ -12,7 +12,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'xtranophilist@gmail.com'),
+    ('Dipesh Acharya', 'xtranophilist@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -128,11 +128,15 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'registration',
-
+    'users',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 )
 
 
@@ -141,7 +145,6 @@ ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
 EMAIL_HOST = 'localhost'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 LOGIN_REDIRECT_URL = '/'
-
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
