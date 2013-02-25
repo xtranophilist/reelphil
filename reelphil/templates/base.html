@@ -1,10 +1,16 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-    </head>
-    <body>
-        {{ request.user.get_email }}
-        {% block content %}{% endblock %}
-    </body>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        {% if user.is_authenticated %}
+        Logged in as {{user}}
+        {% endif %}
+    </header>
+</header>
+{% block content %}{% endblock %}
+
+</body>
 </html>

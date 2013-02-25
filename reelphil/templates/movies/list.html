@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %} List {% endblock %}
+
+{% block content %}
+
+{{ list.0.keys }}
+<br/>
+<br/>
+
+{% for movie in list%}
+
+{{movie.title}} - {{movie.canonical_title}}
+<br/>
+
+{% endfor %}
+
+{% endblock %}
