@@ -13,20 +13,20 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('Dipesh Acharya', 'xtranophilist@gmail.com'),
-)
+    )
 
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
+'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'reelphil',                      # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'passweird',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
+        }
+        }
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -76,7 +76,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-)
+    )
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -98,7 +98,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-)
+    )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -108,7 +108,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+    )
 
 ROOT_URLCONF = 'reelphil.urls'
 
@@ -119,9 +119,9 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(SITE_ROOT, 'templates'),
+    os.path.join(SITE_ROOT, '..', 'templates'),
 
-)
+    )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -132,22 +132,90 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'registration',
+    'users',
+    'profiles',
+    'social_auth',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-)
+    )
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-)
+    )
 
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.twitter.TwitterBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuthBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
+    'social_auth.backends.google.GoogleBackend',
+    'social_auth.backends.yahoo.YahooBackend',
+    'social_auth.backends.browserid.BrowserIDBackend',
+    'social_auth.backends.contrib.linkedin.LinkedinBackend',
+    'social_auth.backends.contrib.disqus.DisqusBackend',
+    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+    'social_auth.backends.contrib.orkut.OrkutBackend',
+    'social_auth.backends.contrib.foursquare.FoursquareBackend',
+    'social_auth.backends.contrib.github.GithubBackend',
+    'social_auth.backends.contrib.vkontakte.VKontakteBackend',
+    'social_auth.backends.contrib.live.LiveBackend',
+    'social_auth.backends.contrib.skyrock.SkyrockBackend',
+    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
+    'social_auth.backends.contrib.readability.ReadabilityBackend',
+    'social_auth.backends.OpenIDBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    )
+
+TWITTER_CONSUMER_KEY         = ''
+TWITTER_CONSUMER_SECRET      = ''
+FACEBOOK_APP_ID              = ''
+FACEBOOK_API_SECRET          = ''
+LINKEDIN_CONSUMER_KEY        = ''
+LINKEDIN_CONSUMER_SECRET     = ''
+ORKUT_CONSUMER_KEY           = ''
+ORKUT_CONSUMER_SECRET        = ''
+GOOGLE_CONSUMER_KEY          = ''
+GOOGLE_CONSUMER_SECRET       = ''
+GOOGLE_OAUTH2_CLIENT_ID      = ''
+GOOGLE_OAUTH2_CLIENT_SECRET  = ''
+FOURSQUARE_CONSUMER_KEY      = ''
+FOURSQUARE_CONSUMER_SECRET   = ''
+VK_APP_ID                    = ''
+VK_API_SECRET                = ''
+LIVE_CLIENT_ID               = ''
+LIVE_CLIENT_SECRET           = ''
+SKYROCK_CONSUMER_KEY         = ''
+SKYROCK_CONSUMER_SECRET      = ''
+YAHOO_CONSUMER_KEY           = ''
+YAHOO_CONSUMER_SECRET        = ''
+READABILITY_CONSUMER_SECRET  = ''
+READABILITY_CONSUMER_SECRET  = ''
+
+SOCIAL_AUTH_CREATE_USERS          = True
+SOCIAL_AUTH_FORCE_RANDOM_USERNAME = False
+SOCIAL_AUTH_DEFAULT_USERNAME      = 'socialauth_user'
+SOCIAL_AUTH_COMPLETE_URL_NAME     = 'complete'
+LOGIN_ERROR_URL                   = '/login/error/'
+#SOCIAL_AUTH_USER_MODEL            = 'app.CustomUser'
+SOCIAL_AUTH_ERROR_KEY             = 'socialauth_error'
+
+
+AUTH_PROFILE_MODULE = "users.Profile"
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
 EMAIL_HOST = 'localhost'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 LOGIN_REDIRECT_URL = '/'
+
+# LOGIN_URL          = '/login-form/'
+# LOGIN_REDIRECT_URL = '/logged-in/'
+# LOGIN_ERROR_URL    = '/login-error/'
+
+SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
+SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 
 
 # A sample logging configuration. The only tangible logging
@@ -156,25 +224,25 @@ LOGIN_REDIRECT_URL = '/'
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
+'version': 1,
+'disable_existing_loggers': False,
+'filters': {
+'require_debug_false': {
+'()': 'django.utils.log.RequireDebugFalse'
+}
+},
+'handlers': {
+'mail_admins': {
+'level': 'ERROR',
+'filters': ['require_debug_false'],
+'class': 'django.utils.log.AdminEmailHandler'
+}
+},
+'loggers': {
+'django.request': {
+'handlers': ['mail_admins'],
+'level': 'ERROR',
+'propagate': True,
+},
+}
 }

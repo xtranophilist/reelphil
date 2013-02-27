@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from imdb import IMDb
 
 
+@login_required
 def index(request):
     ia = IMDb('sql', uri='mysql://root:passweird@localhost/reelphil')
     movie = ia.get_movie('1318514')
