@@ -11,7 +11,6 @@ def index(request):
 def movie(request):
     slug = request.path.replace('/movies/', '')
     movie = Movie.objects.get(slug=slug)
-    print movie.id
     return render(request, 'movies/movie.html', {"movie": movie})
 
 
