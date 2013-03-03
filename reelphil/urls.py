@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     (r'^profiles/', include('profiles.urls')),
     url(r'^movie/', include('movie.urls')),
     url(r'^person/', include('person.urls')),
+    url(r'^list/', include('list.urls')),
     )
