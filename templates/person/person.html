@@ -1,0 +1,13 @@
+
+{% extends "base.html" %}
+
+{% block title %} {{person.name}} {% endblock %}
+
+{% block content %}
+
+<h1> {{person.name}} </h1>
+
+
+Directions: {{ person.directions.all|join:", " }}
+
+{% endblock %}

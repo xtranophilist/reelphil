@@ -1,15 +1,5 @@
 from django.db import models
-
-
-class Person(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=765)
-
-    def __repr__(self):
-        return self.name
-
-    class Meta:
-        db_table = u'person'
+# import person.models
 
 
 class Movie(models.Model):
@@ -19,20 +9,41 @@ class Movie(models.Model):
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
     slug = models.CharField(max_length=765)
-    directors = models.ManyToManyField(Person, through='Direction')
+
+    def __unicode__(self):
+        return self.title
 
     class Meta:
         db_table = u'movie'
 
 
-class Direction(models.Model):
-    movie = models.ForeignKey(Movie, primary_key=True)
-    person = models.ForeignKey(Person)
-    person_name = models.CharField(max_length=765)
+# class Person(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     name = models.CharField(max_length=765)
+#     slug = models.CharField(max_length=255)
+#     directions = models.ManyToManyField(Movie, through='Direction', related_name='member')
 
-    class Meta:
-        db_table = u'movie_nm_director'
-        unique_together = (("movie", "person"),)
+#     def __unicode__(self):
+#         return self.name
+
+#     class Meta:
+#         db_table = u'person'
+
+
+# class Direction(models.Model):
+#     movie = models.ForeignKey(Movie, primary_key=True)
+#     person = models.ForeignKey(Person)
+#     person_name = models.CharField(max_length=765)
+
+#     def __unicode__(self):
+#         return self.person_name
+
+#     class Meta:
+#         db_table = u'movie_nm_director'
+#         unique_together = (("movie", "person"),)
+
+
+
 
 
 # class Genre(models.Model):

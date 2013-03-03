@@ -1,17 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from models import Movie
+from person.models import Person
 
 
 @login_required
 def index(request):
-    return render(request, 'movies/all.html', {"movie": movie})
+    return render(request, 'movie/all.html', {"movie": movie})
 
 
 def movie(request):
-    slug = request.path.replace('/movies/', '')
+    slug = request.path.replace('/movie/', '')
     movie = Movie.objects.get(slug=slug)
-    return render(request, 'movies/movie.html', {"movie": movie})
+    # print movie.direction_set.all()
+    return render(request, 'movie/movie.html', {"movie": movie})
 
 
 # def list(request):

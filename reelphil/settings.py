@@ -138,7 +138,7 @@ INSTALLED_APPS = (
     'users',
     'profiles',
     'social_auth',
-    'movies',
+    'movie',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'debug_toolbar',

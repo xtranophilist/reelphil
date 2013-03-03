@@ -20,6 +20,6 @@ urlpatterns = patterns('',
     url('^$',  include('home.urls')),
     url(r'^user/', include('users.urls')),
     (r'^profiles/', include('profiles.urls')),
-
-    url(r'^movies/', include('movies.urls')),
+    url(r'^movie/', include('movie.urls')),
+    url(r'^person/', include('person.urls')),
     )
