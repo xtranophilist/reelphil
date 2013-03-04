@@ -126,7 +126,7 @@ INSTALLED_APPS = (
     'users',
     'profiles',
     'social_auth',
-    # 'movie',
+    'movie',
     # 'list',
     # 'person',
     # Uncomment the next line to enable the admin:
