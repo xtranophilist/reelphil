@@ -12,6 +12,8 @@ IMDB Rating: {{movie.rating}}
 <br/>
 Runtime: {{movie.runtime}} mins
 <br/>
-Directors: {{ movie.direction_set.all|join:", " }}
+Directors: {{ movie.directors.all|join:", " }}
+<br/>
+{# Genres: {{ movie.}} #}
 
 {% endblock %}

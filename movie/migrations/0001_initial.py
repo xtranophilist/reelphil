@@ -20,9 +20,9 @@ class Migration(SchemaMigration):
         db.send_create_signal('movie', ['Movie'])
 
         # Adding model 'MovieInfo'
-        db.create_table('movie_movieinfo', (
+        db.create_table(u'movie_info', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('move_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['movie.Movie'])),
+            ('movie', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['movie.Movie'])),
             ('title_type', self.gf('django.db.models.fields.IntegerField')()),
         ))
         db.send_create_signal('movie', ['MovieInfo'])
@@ -33,7 +33,7 @@ class Migration(SchemaMigration):
         db.delete_table(u'movie')
 
         # Deleting model 'MovieInfo'
-        db.delete_table('movie_movieinfo')
+        db.delete_table(u'movie_info')
 
 
     models = {
@@ -47,9 +47,9 @@ class Migration(SchemaMigration):
             'year': ('django.db.models.fields.IntegerField', [], {})
         },
         'movie.movieinfo': {
-            'Meta': {'object_name': 'MovieInfo'},
+            'Meta': {'object_name': 'MovieInfo', 'db_table': "u'movie_info'"},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'move_id': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['movie.Movie']"}),
+            'movie': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['movie.Movie']"}),
             'title_type': ('django.db.models.fields.IntegerField', [], {})
         }
     }
