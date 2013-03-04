@@ -1,4 +1,4 @@
 *.pyc
-helloworld
-polls
-templates/polls
+*~
+reelphil/settings_secret.py
+
