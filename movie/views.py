@@ -8,8 +8,3 @@ def movie(request):
     return render(request, 'movie/movie.html', {"movie": movie})
 
 
-# def list(request):
-#     ia = IMDb('sql', uri='mysql://root:passweird@localhost/reelphil')
-#     # ia = IMDb()
-#     list = ia.get_top250_movies()
-#     return render(request, 'movies/list.html', {"list": list})

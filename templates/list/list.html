@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} List {% endblock %}
+
+{% block content %}
+
+<h1>{{ item_list.name }}</h1>
+{{ item_list.description }}
+<br/>
+Created by {{ item_list.author }}
+<br/>
+
+{% for movie in item_list.items.all%}
+{{movie.title}}
+<br/>
+{% endfor %}
+
+
+{% endblock %}

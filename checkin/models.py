@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from movie.models import Movie
 
 
 class Checkin(models.Model):

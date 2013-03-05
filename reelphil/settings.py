@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'profiles',
     'social_auth',
     'movie',
+    'item_list',
     # 'list',
     'person',
     'checkin',
