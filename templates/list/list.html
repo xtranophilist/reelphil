@@ -4,11 +4,12 @@
 
 {% block content %}
 
-<h1>{{ item_list.name }}</h1>
-{{ item_list.description }}
-<br/>
-Created by {{ item_list.author }}
-<br/>
+<p>
+    <h1>{{ item_list.name }}</h1>
+    {{ item_list.description }}
+    <br/>
+    Created by {{ item_list.author }}
+</p>
 
 {% for movie in item_list.items.all%}
 {{movie.title}}
