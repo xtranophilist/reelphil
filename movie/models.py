@@ -19,11 +19,6 @@ class Movie(models.Model):
     class Meta:
         db_table = u'movie'
 
-    def natural_key(self):
-        return self.title + ' (' + str(self.year) + ')'
-    natural_key.dependencies = ['contenttypes.contenttype']
-
-
 
 class MovieInfo(models.Model):
     movie = models.ForeignKey(Movie)

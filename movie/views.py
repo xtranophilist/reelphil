@@ -2,8 +2,8 @@ from django.shortcuts import render
 from models import Movie
 
 
-def movie(request):
-    slug = request.path.replace('/movie/', '')
+def movie(request, slug):
+    print slug
     movie = Movie.objects.get(slug=slug)
     return render(request, 'movie/movie.html', {"movie": movie})
 

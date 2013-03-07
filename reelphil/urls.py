@@ -7,6 +7,13 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 admin.autodiscover()
 
+from tastypie.api import Api
+from movie.api import MovieResource
+
+v1_api = Api(api_name='v1')
+v1_api.register(MovieResource())
+# v1_api.register(EntryResource())
+
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'reelphil.views.home', name='home'),
@@ -24,6 +31,8 @@ urlpatterns = patterns('',
     url(r'^person/', include('person.urls')),
     url(r'^list/', include('item_list.urls')),
     url(r'^ajax/', include('ajax.urls')),
+    url(r'^api/', include(v1_api.urls)),
+
     # url('^$',  include('home.urls')),
     )
 
