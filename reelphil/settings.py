@@ -133,10 +133,6 @@ INSTALLED_APPS = (
     'profiles',
     'social_auth',
     'movie',
-    'item_list',
-    'person',
-    'checkin',
-    'ajax',
     'tastypie',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

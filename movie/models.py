@@ -1,7 +1,16 @@
 from django.db import models
-from person.models import Person
 from django.contrib.auth.models import User
-# from checkin.models import Movie_User
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        db_table = u'person'
 
 
 class Movie(models.Model):
@@ -39,3 +48,40 @@ class MovieUser(models.Model):
 
     class Meta:
         db_table = u'movie_user'
+
+
+class Checkin(models.Model):
+    user = models.ForeignKey(User)
+    item_id = models.IntegerField()
+    item_type = models.IntegerField()
+    checktime = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = u'checkin'
+
+
+class ItemList(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    author = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    items = models.ManyToManyField(Movie, through='ListItem', related_name='list_items')
+    slug = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        db_table = u'list'
+
+
+class ListItem(models.Model):
+    # item = models.IntegerField()
+    # item_type = models.IntegerField()
+    movie = models.ForeignKey(Movie)
+    item_list = models.ForeignKey(ItemList)
+    description = models.TextField()
+
+    class Meta:
+        db_table = u'list_item'
