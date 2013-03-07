@@ -8,3 +8,6 @@ def movie(request):
     return render(request, 'movie/movie.html', {"movie": movie})
 
 
+def ajax(request):
+    if not request.POST:
+        return render(request, 'movie/movie.html', {"movie": movie})

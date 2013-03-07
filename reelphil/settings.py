@@ -54,7 +54,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = SITE_ROOT + '/static_files/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -63,6 +63,7 @@ ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    SITE_ROOT + '/static/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -76,6 +77,10 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+SERIALIZATION_MODULES = {
+    'json': 'wadofstuff.django.serializers.json'
+}
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7$t43(%d02y209v3(he5_kgq7cgt6qrgz^ttqx!uv-wq=$bmcl'
 
@@ -88,6 +93,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.static'
     )
 
 MIDDLEWARE_CLASSES = (
@@ -128,9 +134,10 @@ INSTALLED_APPS = (
     'social_auth',
     'movie',
     'item_list',
-    # 'list',
     'person',
     'checkin',
+    'ajax',
+    'tastypie',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'debug_toolbar',

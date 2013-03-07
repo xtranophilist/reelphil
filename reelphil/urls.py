@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 # from users import views as users_views
 
@@ -22,5 +23,8 @@ urlpatterns = patterns('',
     url(r'^movie/', include('movie.urls')),
     url(r'^person/', include('person.urls')),
     url(r'^list/', include('item_list.urls')),
-    url('^$',  include('home.urls')),
+    url(r'^ajax/', include('ajax.urls')),
+    # url('^$',  include('home.urls')),
     )
+
+urlpatterns += staticfiles_urlpatterns()

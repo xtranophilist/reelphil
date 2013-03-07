@@ -2,6 +2,33 @@
 
 {% block title %} List {% endblock %}
 
+{% block head_end %}
+<script>
+
+$(document).ready(function () {
+
+    data = {
+        "movies":[
+        {
+            "title":"The Shining",
+            "year":"1980"
+        },
+        {
+            "title":"The Matrix",
+            "year":"1980"
+        }
+        ]
+    };
+
+ko.applyBindings(new ListViewModel(data));
+
+});
+
+</script>
+
+
+ {% endblock %}
+
 {% block content %}
 
 <p>
@@ -11,10 +38,22 @@
     Created by {{ item_list.author }}
 </p>
 
-{% for movie in item_list.items.all%}
-{{movie.title}}
-<br/>
-{% endfor %}
+<p>
+{{item_list}}
 
+</p>
+
+
+{# {% for movie in item_list.items.all%} #}
+<table>
+    <tbody data-bind="foreach: movies">
+        <tr>
+            <td><span data-bind="text: title"></span></td>
+            {# <td><span data-bind="text: formattedPrice"></span></td> #}
+
+        </tr>
+    </tbody>
+    {# {% endfor %} #}
+</table>
 
 {% endblock %}
