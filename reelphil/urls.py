@@ -8,11 +8,11 @@ from django.contrib import admin
 admin.autodiscover()
 
 from tastypie.api import Api
-from movie.api import MovieResource
+from movie.api import MovieResource, ListResource
 
 v1_api = Api(api_name='v1')
 v1_api.register(MovieResource())
-# v1_api.register(EntryResource())
+v1_api.register(ListResource())
 
 urlpatterns = patterns('',
     url(r'^social/', include('social_auth.urls')),
