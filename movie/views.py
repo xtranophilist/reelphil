@@ -1,12 +1,21 @@
 from django.shortcuts import render
 from models import Movie, Person
 # from tastypie.serializers import Serializer
-from movie.api import ListResource
+# from movie.api import ListResource
+from reelphil.helper import serialize
+
+from rest_framework import generics
+from movie.serializers import MovieSerializer, ListSerializer
 
 
 def movie(request, slug):
-    movie = Movie.objects.get(slug=slug)
-    return render(request, 'movie/movie.html', {"movie": movie})
+    # movie = Movie.objzects.get(slug=slug)
+    # print type(movie)
+    return render(request, 'movie/movie.html', {"movie": serialize(MovieSerializer, slug=slug)})
+
+
+def all_movies(request):
+    return render(request, 'movie/all_movies.html', {"movies": serialize(MovieSerializer)})
 
 
 def person(request, slug):
@@ -15,21 +24,14 @@ def person(request, slug):
 
 
 def item_list(request, slug):
-    # item_list = ItemList.objects.get(slug=slug)
-    # # serializer = Serializer()
-    # # serializer
-    # # print serializer.serialize(item_list)
-    # lr = ListResource()
-    # item_list = lr.obj_get(request=request, slug=slug)
-    # lr_bundle = lr.build_bundle(obj=item_list, request=request)
-    # return render(request, 'movie/list.html', {"item_list": lr.serialize(None, lr.full_dehydrate(lr_bundle), 'application/json')})
-    # return render(request, 'movie/list.html', {"item_list": item_list})
-    lr = ListResource()
-    return render(request, 'movie/list.html', {"item_list": resource_to_json(lr)})
+    return render(request, 'movie/list.html', {"item_list": serialize(ListSerializer, slug=slug)})
 
 
-def resource_to_json(resource):
-    r_list = resource.get_object_list(None)
-    r_to_serialize = [resource.full_dehydrate(resource.build_bundle(obj=obj)) for obj in r_list]
-    return resource.serialize(None, r_to_serialize, 'application/json')
+class MovieList(generics.ListCreateAPIView):
+    model = Movie
+    serializer_class = MovieSerializer
 
+
+class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Movie
+    serializer_class = MovieSerializer

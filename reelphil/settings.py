@@ -134,12 +134,18 @@ INSTALLED_APPS = (
     'social_auth',
     'movie',
     'tastypie',
+    'rest_framework',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'debug_toolbar',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     )
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
+}
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',

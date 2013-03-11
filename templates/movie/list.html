@@ -1,59 +1,46 @@
 {% extends "base.html" %}
-
-{% block title %} List {% endblock %}
+{% block title %} {{item_list.name}} {% endblock %}
 
 {% block head_end %}
 <script>
-
 $(document).ready(function () {
-
-    data = {
-        "movies":[
-        {
-            "title":"The Shining",
-            "year":"1980"
-        },
-        {
-            "title":"The Matrix",
-            "year":"1980"
-        }
-        ]
-    };
-
-ko.applyBindings(new ListViewModel(data));
-
+    {% load json_filters %}
+    data = {{item_list|jsonify}};
+    ko.applyBindings(new ListViewModel(data));
 });
-
 </script>
-
-
- {% endblock %}
+{% endblock %}
 
 {% block content %}
 
 <p>
-    <h1>{{ item_list.name }}</h1>
-    {{ item_list.description }}
-    <br/>
-    Created by {{ item_list.author }}
+    <h1 data-bind="text: name"></h1>
+    <div data-bind="text: description"></div>
+    <div>Created by <span data-bind="text: author"></span></div>
 </p>
 
-<p>
-{{item_list}}
-
-</p>
-
-
-{# {% for movie in item_list.items.all%} #}
 <table>
-    <tbody data-bind="foreach: movies">
+    <tbody data-bind="foreach: items">
         <tr>
-            <td><span data-bind="text: title"></span></td>
-            {# <td><span data-bind="text: formattedPrice"></span></td> #}
-
+            <td>
+            <a data-bind="attr: {'href':  '/movie/' + slug, title: name }">
+                <span data-bind="text: title"></span></td>
+            </a>
+            <td>(<span data-bind="text: year"></span>)</td>
+            <td><span data-bind="foreach: directors">
+                <!-- ko if: $index() != 0 -->,<!-- /ko -->
+                <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
+                    <span data-bind="text: name"></span>
+                </a>
+            </span></td>
         </tr>
     </tbody>
-    {# {% endfor %} #}
 </table>
+
+
+<p>
+    {{item_list}}
+
+</p>
 
 {% endblock %}
