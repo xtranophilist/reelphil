@@ -22,11 +22,25 @@ class Movie(models.Model):
     directors = models.ManyToManyField(Person, related_name='directions')
     users = models.ManyToManyField(User, through='MovieUser', related_name='user_data')
 
+    def get_watched(self):
+        return True
+
+    watched = property(get_watched)
+
+    def get_owned(self):
+        return True
+
+    owned = property(get_owned)
+
     def __unicode__(self):
         return self.title + ' (' + str(self.year) + ')'
 
     class Meta:
         db_table = u'movie'
+
+    # def owned(self, user=None):
+    #     if user is None:
+    #         user = 1
 
 
 class MovieInfo(models.Model):

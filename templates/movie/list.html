@@ -23,24 +23,32 @@ $(document).ready(function () {
     <tbody data-bind="foreach: items">
         <tr>
             <td>
-            <a data-bind="attr: {'href':  '/movie/' + slug, title: name }">
-                <span data-bind="text: title"></span></td>
-            </a>
-            <td>(<span data-bind="text: year"></span>)</td>
-            <td><span data-bind="foreach: directors">
-                <!-- ko if: $index() != 0 -->,<!-- /ko -->
-                <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
-                    <span data-bind="text: name"></span>
+                <a data-bind="attr: {'href':  '/movie/' + slug, title: name }">
+                    <span data-bind="text: title"></span></td>
                 </a>
-            </span></td>
-        </tr>
-    </tbody>
-</table>
+                <td>(<span data-bind="text: year"></span>)</td>
+                <td><span data-bind="foreach: directors">
+                    <!-- ko if: $index() != 0 -->,<!-- /ko -->
+                    <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
+                        <span data-bind="text: name"></span>
+                    </a>
+                </span></td>
+                <td>
+                    <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
+                    <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
+                </td>
+                <td>
+                    <input type="checkbox" class="owned" data-bind="toggle: owned, attr: {'id':  'owned-movie' + id}"/>
+                    <label data-bind="attr: {'for':  'owned-movie' + id}">Owned</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
 
-<p>
-    {{item_list}}
+    <p>
+        {{item_list}}
 
-</p>
+    </p>
 
-{% endblock %}
+    {% endblock %}

@@ -10,10 +10,12 @@ class PersonSerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     directors = PersonSerializer(many=True)
+    watched = serializers.BooleanField()
+    owned = serializers.BooleanField()
 
     class Meta:
         model = Movie
-        fields = ('title', 'year', 'slug', 'directors')
+        fields = ('id', 'title', 'year', 'slug', 'directors', 'watched', 'owned')
 
 
 class ListSerializer(serializers.ModelSerializer):
