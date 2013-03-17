@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from reelphil.middlewares import ThreadLocal as tl
+# from reelphil
 
 
 class Person(models.Model):
@@ -20,35 +22,20 @@ class Movie(models.Model):
     runtime = models.IntegerField(null=True, blank=True)
     slug = models.CharField(max_length=765)
     directors = models.ManyToManyField(Person, related_name='directions')
-    users = models.ManyToManyField(User, through='MovieUser', related_name='user_data')
+    users = models.ManyToManyField(User, through='MovieUser', related_name='movie_user_data')
 
-    def get_watched(self):
-        return True
+    def get_user_data(self):
+        movie_user = MovieUser.objects.get(movie=self, user=tl.get_current_user())
 
-    watched = property(get_watched)
+        return movie_user
 
-    def get_owned(self):
-        return True
-
-    owned = property(get_owned)
+    user_data = property(get_user_data)
 
     def __unicode__(self):
         return self.title + ' (' + str(self.year) + ')'
 
     class Meta:
         db_table = u'movie'
-
-    # def owned(self, user=None):
-    #     if user is None:
-    #         user = 1
-
-
-class MovieInfo(models.Model):
-    movie = models.ForeignKey(Movie)
-    title_type = models.IntegerField(default=1, blank=True)
-
-    class Meta:
-        db_table = u'movie_info'
 
 
 class MovieUser(models.Model):
@@ -62,6 +49,14 @@ class MovieUser(models.Model):
 
     class Meta:
         db_table = u'movie_user'
+
+
+class MovieInfo(models.Model):
+    movie = models.ForeignKey(Movie)
+    title_type = models.IntegerField(default=1, blank=True)
+
+    class Meta:
+        db_table = u'movie_info'
 
 
 class Checkin(models.Model):
@@ -91,8 +86,6 @@ class ItemList(models.Model):
 
 
 class ListItem(models.Model):
-    # item = models.IntegerField()
-    # item_type = models.IntegerField()
     movie = models.ForeignKey(Movie)
     item_list = models.ForeignKey(ItemList)
     description = models.TextField()

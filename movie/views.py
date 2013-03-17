@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from models import Movie, Person
+from models import Movie, Person, ItemList
 # from tastypie.serializers import Serializer
 # from movie.api import ListResource
 from reelphil.helper import serialize
@@ -24,7 +24,9 @@ def person(request, slug):
 
 
 def item_list(request, slug):
-    return render(request, 'movie/list.html', {"item_list": serialize(ListSerializer, slug=slug)})
+    the_list = ListSerializer(ItemList.objects.get(slug=slug), request).data
+    # return render(request, 'movie/list.html', {"item_list": serialize(ListSerializer(request.user), slug=slug)})
+    return render(request, 'movie/list.html', {"item_list": the_list})
 
 
 class MovieList(generics.ListCreateAPIView):

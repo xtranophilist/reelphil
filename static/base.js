@@ -18,8 +18,13 @@ function MovieModel(movie){
         }
         return str;
     });
-    self.watched = ko.observable(self.watched);
-    self.owned = ko.observable(self.owned);
+    if (movie.user_data){
+        self.watched = ko.observable(movie.user_data.watched);
+        self.owned = ko.observable(movie.user_data.owned);
+    }else{
+        self.watched = false;
+        self.owned = false;
+    }
 }
 
 function DirectorModel(director){
@@ -52,9 +57,9 @@ ko.bindingHandlers.toggle = {
                     id: viewModel.id,
                     attr: element.className,
                     value: element.checked
-            }
+                }
 
-        });
+            });
         });
     },
     update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
