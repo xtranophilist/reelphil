@@ -1,0 +1,7 @@
+td input {
+    transition: transform 200s ease-out;
+}
+
+td input.loading{
+    transform: rotateZ(360000deg);
+}

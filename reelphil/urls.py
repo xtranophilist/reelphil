@@ -15,6 +15,7 @@ admin.autodiscover()
 # v1_api.register(ListResource())
 
 urlpatterns = patterns('',
+    url(r'^ajax/', include('ajax.urls')),
     url(r'^social/', include('social_auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('users.urls')),

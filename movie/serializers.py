@@ -11,7 +11,7 @@ class PersonSerializer(serializers.ModelSerializer):
 class MovieUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieUser
-        fields = ('watched', 'owned')
+        fields = ('watched', 'owned', 'liked', 'disliked', 'favorited')
 
 
 class MovieSerializer(serializers.ModelSerializer):
