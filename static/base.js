@@ -18,8 +18,9 @@ function MovieModel(movie){
         }
         return str;
     });
-    if (!self.user_data) self.user_data = [];
+    self.full_title = self.title+' ('+self.year+')';
 
+    if (!self.user_data) self.user_data = [];
     //convert all toggle keys to observables
     user_data = ['watched', 'owned', 'liked', 'disliked', 'favorited'];
     for (var key in user_data){
@@ -28,6 +29,7 @@ function MovieModel(movie){
         else
             self[user_data[key]] = ko.observable(false);
     }
+    console.log(self);
 }
 
 function DirectorModel(director){
@@ -35,14 +37,29 @@ function DirectorModel(director){
     for(var k in director) self[k]=director[k];
 }
 
-function ListViewModel(data) {
+function ListViewModel(data, list_container) {
+    if (typeof(list_container) == 'undefined')
+        list_container = 'items';
     var self = this;
     for(var k in data)
         self[k]=data[k];
-    self.items = ko.utils.arrayMap(data.items, function(item) {
+    self.items = ko.utils.arrayMap(data[list_container], function(item) {
         return new MovieModel(item);
     });
+    console.log(self);
+}
+
+function MovieViewModel(data) {
+    var self = this;
+    console.log(data);
+
+    for(var k in data)
+        self[k]=data[k];
+    // self.items = ko.utils.arrayMap(data.items, function(item) {
+    //     return new MovieModel(item);
+    // });
     // console.log(self);
+
 }
 
 ko.bindingHandlers.toggle = {

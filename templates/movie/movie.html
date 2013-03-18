@@ -1,12 +1,64 @@
-
 {% extends "base.html" %}
-
 {% block title %} {{movie.title}} {% endblock %}
+
+{% block head_end %}
+<script>
+$(document).ready(function () {
+    {% load json_filters %}
+    data = {{movie|jsonify}};
+    ko.applyBindings(new MovieModel(data));
+});
+</script>
+{% endblock %}
 
 {% block content %}
 
-{% load json_filters %}
+<p>
+    <h1 data-bind="text: full_title"></h1>
+</p>
 
-{{movie|jsonify}}
+{% if user.is_authenticated %}
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
+                <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
+            </td>
+            <td>
+                <input type="checkbox" class="owned" data-bind="toggle: owned, attr: {'id':  'owned-movie' + id}"/>
+                <label data-bind="attr: {'for':  'owned-movie' + id}">Owned</label>
+            </td>
+            <td>
+                <input type="checkbox" class="liked" data-bind="toggle: liked, visible: !disliked() && !favorited(), attr: {'id':  'liked-movie' + id}"/>
+                <label data-bind="visible: !disliked() && !favorited(), attr: {'for':  'liked-movie' + id}">Liked</label>
+            </td>
+            <td>
+                <input type="checkbox" class="disliked" data-bind="toggle: disliked, visible: !liked() && !favorited(), attr: {'id':  'disliked-movie' + id}"/>
+                <label data-bind="visible: !liked() && !favorited(), attr: {'for':  'disliked-movie' + id}">Disliked</label>
+            </td>
+            <td>
+                <input type="checkbox" class="favorited" data-bind="toggle: favorited, visible: !disliked(), attr: {'id':  'favorited-movie' + id}"/>
+                <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}">Favorited</label>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}
+
+Director(s):
+<div data-bind="foreach: directors">
+    <!-- ko if: $index() != 0 -->,<!-- /ko -->
+    <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
+        <span data-bind="text: name"></span>
+    </a>
+</span>
+
+
+
+<p>
+    {{movie}}
+
+</p>
 
 {% endblock %}

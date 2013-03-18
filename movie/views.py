@@ -5,21 +5,20 @@ from models import Movie, Person, ItemList
 from reelphil.helper import serialize
 
 from rest_framework import generics
-from movie.serializers import MovieSerializer, ListSerializer
+from movie.serializers import FullMovieSerializer, ListSerializer, FullPersonSerializer
 
 
 def movie(request, slug):
-    # movie = Movie.objzects.get(slug=slug)
-    # print type(movie)
-    return render(request, 'movie/movie.html', {"movie": serialize(MovieSerializer, slug=slug)})
+    the_movie = FullMovieSerializer(Movie.objects.get(slug=slug), request).data
+    return render(request, 'movie/movie.html', {"movie": the_movie})
 
 
 def all_movies(request):
-    return render(request, 'movie/all_movies.html', {"movies": serialize(MovieSerializer)})
+    return render(request, 'movie/all_movies.html', {"movies": serialize(FullMovieSerializer)})
 
 
 def person(request, slug):
-    person = Person.objects.get(slug=slug)
+    person = FullPersonSerializer(Person.objects.get(slug=slug), request).data
     return render(request, 'movie/person.html', {"person": person})
 
 
@@ -31,12 +30,12 @@ def item_list(request, slug):
 
 class MovieList(generics.ListCreateAPIView):
     model = Movie
-    serializer_class = MovieSerializer
+    serializer_class = FullMovieSerializer
 
 
 class MovieDetail(generics.RetrieveUpdateDestroyAPIView):
     model = Movie
-    serializer_class = MovieSerializer
+    serializer_class = FullMovieSerializer
 
 
 # def get_fields_and_properties(model, instance):

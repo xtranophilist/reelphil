@@ -49,6 +49,17 @@ class MovieUser(models.Model):
     favorited = models.BooleanField()
     watched = models.BooleanField()
 
+    # def __init__(self, *args, **kwargs):
+    #     super(MovieUser, self).__init__(*args, **kwargs)
+    #     self.__original_values = {'owned': self.owned, 'liked': self.liked, 'disliked': self.disliked, 'favorited': self.favorited, 'watched': self.watched}
+
+    # def save(self):
+    #     print self.__original_values
+    #     instance = super(MovieUser, self)
+    #     print self.liked
+    #     instance.save()
+    #     return instance
+
     class Meta:
         db_table = u'movie_user'
 

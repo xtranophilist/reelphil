@@ -15,6 +15,16 @@ class MovieUserSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    watched = serializers.BooleanField()
+    owned = serializers.BooleanField()
+    user_data = MovieUserSerializer()
+
+    class Meta:
+        model = Movie
+        fields = ('id', 'title', 'year', 'slug', 'user_data')
+
+
+class FullMovieSerializer(serializers.ModelSerializer):
     directors = PersonSerializer(many=True)
     watched = serializers.BooleanField()
     owned = serializers.BooleanField()
@@ -25,9 +35,17 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'year', 'slug', 'directors', 'user_data')
 
 
+class FullPersonSerializer(serializers.ModelSerializer):
+    directions = MovieSerializer(many=True)
+
+    class Meta:
+        model = Person
+        fields = ('name', 'slug', 'directions')
+
+
 class ListSerializer(serializers.ModelSerializer):
     author = serializers.RelatedField()
-    items = MovieSerializer()
+    items = FullMovieSerializer()
 
     class Meta:
         model = ItemList
