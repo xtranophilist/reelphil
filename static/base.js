@@ -65,11 +65,12 @@ ko.bindingHandlers.toggle = {
 
                 success: function(message){
                     $(element).removeClass('loading');
-                    // alert(message);
 
                 },
                 error: function(message){
                     $(element).removeClass('loading');
+                    //toggle back the checkbox
+                    $(element).prop('checked', !$(element).prop('checked'));
                     alert(message);
                 }
 

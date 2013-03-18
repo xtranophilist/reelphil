@@ -25,9 +25,11 @@ class Movie(models.Model):
     users = models.ManyToManyField(User, through='MovieUser', related_name='movie_user_data')
 
     def get_user_data(self):
-        movie_user = MovieUser.objects.get(movie=self, user=tl.get_current_user())
-
-        return movie_user
+        current_user = tl.get_current_user()
+        if current_user.id:
+            movie_user = MovieUser.objects.get(movie=self, user=current_user)
+            return movie_user
+        return None
 
     user_data = property(get_user_data)
 

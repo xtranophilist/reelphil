@@ -33,6 +33,7 @@ $(document).ready(function () {
                         <span data-bind="text: name"></span>
                     </a>
                 </span></td>
+                {% if user.is_authenticated %}
                 <td>
                     <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
                     <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
@@ -53,6 +54,7 @@ $(document).ready(function () {
                     <input type="checkbox" class="favorited" data-bind="toggle: favorited, attr: {'id':  'favorited-movie' + id}"/>
                     <label data-bind="attr: {'for':  'favorited-movie' + id}">Favorited</label>
                 </td>
+                {% endif %}
             </tr>
         </tbody>
     </table>
