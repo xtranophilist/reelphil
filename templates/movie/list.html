@@ -27,12 +27,7 @@ $(document).ready(function () {
                     <span data-bind="text: title"></span></td>
                 </a>
                 <td>(<span data-bind="text: year"></span>)</td>
-                <td><span data-bind="foreach: directors">
-                    <!-- ko if: $index() != 0 -->,<!-- /ko -->
-                    <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
-                        <span data-bind="text: name"></span>
-                    </a>
-                </span></td>
+
                 {% if user.is_authenticated %}
                 <td>
                     <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>

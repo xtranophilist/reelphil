@@ -38,12 +38,12 @@ function DirectorModel(director){
 }
 
 function ListViewModel(data, list_container) {
-    if (typeof(list_container) == 'undefined')
+    if (typeof list_container == 'undefined')
         list_container = 'items';
     var self = this;
     for(var k in data)
         self[k]=data[k];
-    self.items = ko.utils.arrayMap(data[list_container], function(item) {
+    self[list_container] = ko.utils.arrayMap(data[list_container], function(item) {
         return new MovieModel(item);
     });
     console.log(self);

@@ -48,11 +48,19 @@ $(document).ready(function () {
 
 Director(s):
 <div data-bind="foreach: directors">
-    <!-- ko if: $index() != 0 -->,<!-- /ko -->
     <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
         <span data-bind="text: name"></span>
     </a>
-</span>
+    <br/>
+</div>
+
+Official List(s):
+<div data-bind="foreach: list_items">
+    <a data-bind="attr: {'href':  '/list/' + slug, title: description}">
+        <span data-bind="text: name"></span>
+    </a>
+    <br/>
+</div>
 
 
 

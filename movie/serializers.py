@@ -24,15 +24,31 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'year', 'slug', 'user_data')
 
 
+class FullListSerializer(serializers.ModelSerializer):
+    author = serializers.RelatedField()
+    items = MovieSerializer()
+
+    class Meta:
+        model = ItemList
+        fields = ('name', 'description', 'author', 'items')
+
+
+class ListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ItemList
+        fields = ('name', 'description', 'slug')
+
+
 class FullMovieSerializer(serializers.ModelSerializer):
     directors = PersonSerializer(many=True)
     watched = serializers.BooleanField()
     owned = serializers.BooleanField()
     user_data = MovieUserSerializer()
+    list_items = ListSerializer(many=True)
 
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'year', 'slug', 'directors', 'user_data')
+        fields = ('id', 'title', 'year', 'slug', 'directors', 'user_data', 'list_items')
 
 
 class FullPersonSerializer(serializers.ModelSerializer):
@@ -42,11 +58,3 @@ class FullPersonSerializer(serializers.ModelSerializer):
         model = Person
         fields = ('name', 'slug', 'directions')
 
-
-class ListSerializer(serializers.ModelSerializer):
-    author = serializers.RelatedField()
-    items = FullMovieSerializer()
-
-    class Meta:
-        model = ItemList
-        fields = ('name', 'description', 'author', 'items')
