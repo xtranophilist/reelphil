@@ -18,6 +18,11 @@ $(document).ready(function () {
 </p>
 
 {% if user.is_authenticated %}
+
+<div class="check-in-block">
+    <span data-bind="click: docheckin">Check-in</span>
+</div>
+
 <table>
     <tbody>
         <tr>

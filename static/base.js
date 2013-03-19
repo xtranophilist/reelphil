@@ -30,6 +30,27 @@ function MovieModel(movie){
             self[user_data[key]] = ko.observable(false);
     }
     console.log(self);
+    self.docheckin = function(data, el){
+        el.target.innerHTML = 'Checking in ...';
+        $.ajax({
+                url: '/ajax/movie/checkin/',
+                type: 'POST',
+                data: {
+                    id: self.id
+                },
+
+                success: function(message){
+                    // upon successful checkin, set watched to true
+                    self.watched(true);
+                    el.target.innerHTML = 'Checked in!';
+                },
+                error: function(message){
+                    el.target.innerHTML = 'Checked in failed!';
+                    alert(message);
+                }
+
+            });
+    };
 }
 
 function DirectorModel(director){
