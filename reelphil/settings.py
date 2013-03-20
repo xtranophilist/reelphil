@@ -131,10 +131,8 @@ INSTALLED_APPS = (
     'south',
     'registration',
     'users',
-    'profiles',
     'social_auth',
     'movie',
-    'tastypie',
     'rest_framework',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

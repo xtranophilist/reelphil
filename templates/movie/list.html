@@ -49,6 +49,7 @@ $(document).ready(function () {
                     <input type="checkbox" class="favorited" data-bind="toggle: favorited, visible: !disliked(), attr: {'id':  'favorited-movie' + id}"/>
                     <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}">Favorited</label>
                 </td>
+
                 {% endif %}
             </tr>
         </tbody>
