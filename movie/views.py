@@ -10,22 +10,22 @@ from movie.serializers import FullMovieSerializer, FullListSerializer, FullPerso
 
 def movie(request, slug):
     the_movie = FullMovieSerializer(Movie.objects.get(slug=slug), request).data
-    return render(request, 'movie/movie.html', {"movie": the_movie})
+    return render(request, 'movie.html', {"movie": the_movie})
 
 
 def all_movies(request):
-    return render(request, 'movie/all_movies.html', {"movies": serialize(FullMovieSerializer)})
+    return render(request, 'all_movies.html', {"movies": serialize(FullMovieSerializer)})
 
 
 def person(request, slug):
     person = FullPersonSerializer(Person.objects.get(slug=slug), request).data
-    return render(request, 'movie/person.html', {"person": person})
+    return render(request, 'person.html', {"person": person})
 
 
 def item_list(request, slug):
     the_list = FullListSerializer(ItemList.objects.get(slug=slug), request).data
     # return render(request, 'movie/list.html', {"item_list": serialize(ListSerializer(request.user), slug=slug)})
-    return render(request, 'movie/list.html', {"item_list": the_list})
+    return render(request, 'list.html', {"item_list": the_list})
 
 
 class MovieList(generics.ListCreateAPIView):
