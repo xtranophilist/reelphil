@@ -1,0 +1,6 @@
+{% load json_filters %}
+
+{% for checkin in user|get_recent_checkins:5 %}
+    {{ checkin.id }}
+    <br/>
+{% endfor %}
