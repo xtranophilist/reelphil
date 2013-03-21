@@ -5,3 +5,17 @@ td input {
 td input.loading{
     transform: rotateZ(360000deg);
 }
+
+.right{
+    float:right;
+}
+
+header, footer{
+    background-color: #EEEEEE;
+}
+
+footer{
+    margin-top: 50px;
+    text-align: center;
+    bottom: 0;
+}

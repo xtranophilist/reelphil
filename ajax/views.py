@@ -3,6 +3,7 @@ from movie.models import *
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+import datetime
 
 
 def json_response(something):
@@ -34,8 +35,10 @@ def movie(request):
         if type(attribute) is bool:
             value = str2bool(value)
         setattr(mu, request.POST['attr'], value)
+        setattr(mu, request.POST['attr']+'_date', datetime.datetime.now())
         mu.save()
         return json_response({'result': 'success'})
+
 
 @csrf_exempt
 def checkin(request):

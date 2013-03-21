@@ -56,6 +56,11 @@ class MovieUser(models.Model):
     disliked = models.BooleanField()
     favorited = models.BooleanField()
     watched = models.BooleanField()
+    owned_date = models.DateTimeField(blank=True)
+    liked_date = models.DateTimeField(blank=True)
+    disliked_date = models.DateTimeField(blank=True)
+    favorited_date = models.DateTimeField(blank=True)
+    watched_date = models.DateTimeField(blank=True)
 
     # def __init__(self, *args, **kwargs):
     #     super(MovieUser, self).__init__(*args, **kwargs)
