@@ -5,19 +5,19 @@
 {% block title %} {{ user.username }} on Reelphil {% endblock %}
 
 {% block content %}
-<h3>{{ user.username }} ({{ user.first_name }} {{ user.last_name }}) </h3>
+<h3>Editing profile for  {{ user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
     {% if form.errors %}
     <p class="errorlist">{% trans "Sorry there are corrections needed in your form below:" %} {{ form.non_field_errors }}</p>
     {% endif %}
     {% if form.is_multipart %}
-    <form enctype="multipart/form-data" method="post" action=".">
+    <form enctype="multipart/form-data" method="post" action=".">{% csrf_token %}
     {% else %}
-    <form method="post" action=".">
+    <form method="post" action=".">{% csrf_token %}
    {% endif %}
   {{ form.as_p }}
    {% if form.instance.email %}
-        Exising email: {{ profile.email }}<br><br>
+        Existing email: {{ profile.email }}<br><br>
    {% endif %}
-        <input type="submit" value="Post" />
+        <input type="submit" value="Update" />
    </form>
 {% endblock %}

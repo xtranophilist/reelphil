@@ -2,11 +2,11 @@
 
 {% load i18n %}
 
-{% block title %} {{ web_user.username }} ({{ web_user.first_name }} {{ web_user.last_name }}) on Reelphil {% endblock %}
+{% block title %} {{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} on Reelphil {% endblock %}
 
 {% block content %}
 
-<h3>{{ web_user.username }} ({{ web_user.first_name }} {{ web_user.last_name }}) </h3>
+<h3>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
 
 <p><a href="/user/edit/">{% trans "Edit Profile" %}</a></p>
 <p><a href="/user/password/reset/">{% trans "Reset Password" %}</a></p>
