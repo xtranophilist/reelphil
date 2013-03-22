@@ -17,7 +17,7 @@ class MovieUserSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     watched = serializers.BooleanField()
     owned = serializers.BooleanField()
-    user_data = MovieUserSerializer()
+    user_data = serializers.Field()
 
     class Meta:
         model = Movie

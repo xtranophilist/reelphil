@@ -4,7 +4,7 @@
 {% block head_end %}
 <script>
 $(document).ready(function () {
-    {% load json_filters %}
+    {% load filters %}
     data = {{item_list|jsonify}};
     ko.applyBindings(new ListViewModel(data));
 });
@@ -57,7 +57,7 @@ $(document).ready(function () {
 
 
     <p>
-        {{item_list}}
+        {{item_list|jsonify}}
 
     </p>
 

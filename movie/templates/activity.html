@@ -1,0 +1,8 @@
+{% load filters %}
+
+<h3>Recent Activity:</h3>
+
+{% for activity in web_user|get_recent_activity:5 %}
+    {{web_user}} {{activity.0}} {{activity.1}}
+    <br/>
+{% endfor %}

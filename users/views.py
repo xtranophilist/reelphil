@@ -16,7 +16,10 @@ def web_login(request, **kwargs):
 
 def profile(request, username=None):
     if username:
-        web_user = User.objects.get(username=username)
+        try:
+            web_user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
     else:
         web_user = request.user
     try:

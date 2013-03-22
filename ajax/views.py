@@ -3,7 +3,6 @@ from movie.models import *
 from django.utils import simplejson
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-import datetime
 
 
 def json_response(something):
@@ -24,19 +23,16 @@ def str2bool(v):
 @csrf_exempt
 def movie(request):
     if request.method == 'POST':
+        activities = {'owned': 1, 'watched': 2, 'liked': 3, 'disliked': 4, 'favorited': 5}
         try:
-            movie = Movie.objects.get(id=request.POST['id'])
-            mu = MovieUser.objects.get(movie=movie, user=request.user)
+            # movie = Movie.objects.get(id=request.POST['id'])
+            activity = Activity.objects.get(movie_id=request.POST['id'], user=request.user, activity_type=activities[request.POST['attr']])
+            if not str2bool(request.POST['value']):
+                activity.delete()
         except ObjectDoesNotExist:
-            mu = MovieUser(user=request.user)
-            mu.movie_id = request.POST['id']
-        value = request.POST['value']
-        attribute = getattr(mu, request.POST['attr'])
-        if type(attribute) is bool:
-            value = str2bool(value)
-        setattr(mu, request.POST['attr'], value)
-        setattr(mu, request.POST['attr']+'_date', datetime.datetime.now())
-        mu.save()
+            activity = Activity(movie_id=request.POST['id'], user=request.user, activity_type=activities[request.POST['attr']])
+            if str2bool(request.POST['value']):
+                activity.save()
         return json_response({'result': 'success'})
 
 

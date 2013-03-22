@@ -1,6 +1,8 @@
-{% load json_filters %}
+{% load filters %}
 
-{% for checkin in user|get_recent_checkins:5 %}
-    {{ checkin.id }}
+<h3>Recent Checkins:</h3>
+
+{% for checkin in web_user|get_recent_checkins:5 %}
+    {{checkin.user}} checked-in to {{checkin.movie}}
     <br/>
 {% endfor %}

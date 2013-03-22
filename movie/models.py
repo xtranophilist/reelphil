@@ -1,7 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from reelphil.middlewares import ThreadLocal as tl
-# from reelphil
+
+
+def timestamp_or_none(user, i, movie):
+    try:
+        return str(Activity.objects.get(user=user, activity_type=i, movie=movie).timestamp)
+    except Activity.DoesNotExist:
+        return None
 
 
 class Person(models.Model):
@@ -27,8 +33,8 @@ class Movie(models.Model):
     def get_user_data(self):
         current_user = tl.get_current_user()
         if current_user.id:
-            movie_user = MovieUser.objects.get(movie=self, user=current_user)
-            return movie_user
+            activities = {1: 'owned', 2: 'watched', 3: 'liked', 4: 'disliked', 5: 'favorited'}
+            return dict((activities[i], timestamp_or_none(user=current_user, i=i, movie=self)) for i in range(1, 6))
         return None
 
     user_data = property(get_user_data)
@@ -46,6 +52,17 @@ class Movie(models.Model):
 
     class Meta:
         db_table = u'movie'
+
+
+class Activity(models.Model):
+    movie = models.ForeignKey(Movie)
+    user = models.ForeignKey(User)
+    activity_type = models.IntegerField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = u'activity'
+        unique_together = (('movie', 'user', 'activity_type'),)
 
 
 class MovieUser(models.Model):
@@ -90,6 +107,9 @@ class Checkin(models.Model):
     item_id = models.IntegerField()
     item_type = models.IntegerField()
     checktime = models.DateTimeField(auto_now_add=True)
+
+    def movie(self):
+        return Movie.objects.get(id=self.item_id)
 
     class Meta:
         db_table = u'checkin'

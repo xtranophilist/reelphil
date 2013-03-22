@@ -7,7 +7,7 @@
 {% block head_end %}
 <script>
 $(document).ready(function () {
-    {% load json_filters %}
+    {% load filters %}
     data = {{person|jsonify}};
     ko.applyBindings(new ListViewModel(data, 'directions'));
 });

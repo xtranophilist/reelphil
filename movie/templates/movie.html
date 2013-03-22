@@ -4,7 +4,7 @@
 {% block head_end %}
 <script>
 $(document).ready(function () {
-    {% load json_filters %}
+    {% load filters %}
     data = {{movie|jsonify}};
     ko.applyBindings(new MovieModel(data));
 });
