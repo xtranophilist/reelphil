@@ -34,7 +34,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('user', 'full_name', 'followers')
+        fields = ('user', 'full_name')
         # deptj
 
 # ProfileSerializer.base_fields['following'] = FollowingSerializer()
