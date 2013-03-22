@@ -6,7 +6,7 @@ from movie.models import Checkin
 class Profile(models.Model):
     user = models.ForeignKey(User, unique=True)
     full_name = models.CharField(max_length=200, blank=True)
-    followers = models.ManyToManyField('self', related_name='following', symmetrical=False)
+    # follows = models.ManyToManyField('self', related_name='followers', symmetrical=False)
 
     def get_absolute_url(self):
         return ('profiles_profile_detail', (), {'username': self.user.username})

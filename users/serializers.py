@@ -3,11 +3,7 @@ from users.models import Profile
 from django.contrib.auth.models import User
 
 
-class WebUserSerializer(serializers.Serializer):
-    id = serializers.Field()
-    username = serializers.Field()
-    email = serializers.Field()
-
+class WebUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username')
@@ -22,12 +18,24 @@ class SimpleProfileSerializer(serializers.ModelSerializer):
         fields = ('user',)
 
 
+class FollowingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Profile
+        fields = ('user',)
+
+
 class ProfileSerializer(serializers.ModelSerializer):
     user = WebUserSerializer()
     followers = SimpleProfileSerializer()
-    following = SimpleProfileSerializer()
-    # followers = serializers.ManyRelatedField()
+    # following = SimpleProfileSerializer()
+    # followers_set = serializers.Field()
+    # following = FollowingSerializer()
 
     class Meta:
         model = Profile
         fields = ('user', 'full_name', 'followers')
+        # deptj
+
+# ProfileSerializer.base_fields['following'] = FollowingSerializer()
+
