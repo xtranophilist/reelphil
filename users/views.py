@@ -5,6 +5,7 @@ from users.models import Profile
 from users.forms import ProfileForm
 from django.http import Http404
 from django.http import HttpResponseRedirect
+from users.serializers import ProfileSerializer
 
 
 def web_login(request, **kwargs):
@@ -26,7 +27,8 @@ def profile(request, username=None):
         profile = Profile.objects.get(user=web_user)
     except Profile.DoesNotExist:
         raise Http404
-    return render(request, 'profiles/profile_detail.html', {"web_user": web_user, "profile": profile})
+    profile_data = ProfileSerializer(profile).data
+    return render(request, 'profiles/profile_detail.html', {"web_user": web_user, "profile": profile_data})
 
 
 def edit_profile(request):

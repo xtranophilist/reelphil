@@ -9,7 +9,7 @@ from movie.serializers import FullMovieSerializer, FullListSerializer, FullPerso
 
 
 def movie(request, slug):
-    the_movie = FullMovieSerializer(Movie.objects.get(slug=slug), request).data
+    the_movie = FullMovieSerializer(Movie.objects.get(slug=slug)).data
     return render(request, 'movie.html', {"movie": the_movie})
 
 
@@ -18,13 +18,12 @@ def all_movies(request):
 
 
 def person(request, slug):
-    person = FullPersonSerializer(Person.objects.get(slug=slug), request).data
+    person = FullPersonSerializer(Person.objects.get(slug=slug)).data
     return render(request, 'person.html', {"person": person})
 
 
 def item_list(request, slug):
-    the_list = FullListSerializer(ItemList.objects.get(slug=slug), request).data
-    # return render(request, 'movie/list.html', {"item_list": serialize(ListSerializer(request.user), slug=slug)})
+    the_list = FullListSerializer(ItemList.objects.get(slug=slug)).data
     return render(request, 'list.html', {"item_list": the_list})
 
 

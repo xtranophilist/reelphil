@@ -8,8 +8,14 @@
 
 <h3>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
 
+<div class="follow">
+    <span data-bind="follow-button">Follow</span>
+</div>
+
 <p><a href="/user/edit/">{% trans "Edit Profile" %}</a></p>
 <p><a href="/user/password/reset/">{% trans "Reset Password" %}</a></p>
+
+{{profile}}
 
 {% include "activity.html" %}
 
