@@ -4,6 +4,7 @@ from django.utils import simplejson
 from django.template import Library
 from django.utils.safestring import mark_safe
 from movie.models import Checkin, Activity
+from django.db.models import Model
 
 register = Library()
 
@@ -12,7 +13,19 @@ register = Library()
 def jsonify(object):
     if isinstance(object, QuerySet):
         return serialize('json', object)
+    if isinstance(object, Model):
+        return mark_safe(serialize('json', [object, ]))
+    print isinstance(object, Model)
     return mark_safe(simplejson.dumps(object))
+
+
+@register.filter
+def wake(obj):
+    if hasattr(obj, '_wrapped') and hasattr(obj, '_setup'):
+            if obj._wrapped.__class__ == object:
+                obj._setup()
+            obj = obj._wrapped
+    return obj
 
 
 @register.filter

@@ -1,21 +1,33 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load filters %}
 
 {% block title %} {{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} on Reelphil {% endblock %}
+
+{% block head_end %}
+<script>
+$(document).ready(function () {
+    {% load filters %}
+    data = {{profile|jsonify}};
+    data.current_user = {{user|wake|jsonify}}[0].fields;
+    ko.applyBindings(new ProfileModel(data));
+});
+</script>
+{% endblock %}
 
 {% block content %}
 
 <h3>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
 
 <div class="follow">
-    <span data-bind="follow-button">Follow</span>
+    <span data-bind="follow: relation()"></span>
 </div>
 
 <p><a href="/user/edit/">{% trans "Edit Profile" %}</a></p>
 <p><a href="/user/password/reset/">{% trans "Reset Password" %}</a></p>
 
-{{profile}}
+{{profile|jsonify}}
 
 {% include "activity.html" %}
 
