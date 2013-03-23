@@ -11,14 +11,6 @@ class WebUserSerializer(serializers.ModelSerializer):
 
 class SimpleProfileSerializer(serializers.ModelSerializer):
     user = WebUserSerializer()
-    # username = serializers.Field(source='user.username')
-
-    class Meta:
-        model = Profile
-        fields = ('user',)
-
-
-class FollowingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
@@ -28,14 +20,8 @@ class FollowingSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     user = WebUserSerializer()
     followers = SimpleProfileSerializer()
-    # following = SimpleProfileSerializer()
-    # followers_set = serializers.Field()
-    # following = FollowingSerializer()
+    following = SimpleProfileSerializer()
 
     class Meta:
         model = Profile
-        fields = ('user', 'full_name')
-        # deptj
-
-# ProfileSerializer.base_fields['following'] = FollowingSerializer()
-
+        fields = ('user', 'full_name', 'followers', 'following')
