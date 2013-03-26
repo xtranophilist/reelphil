@@ -1,5 +1,6 @@
-from movie.models import Movie, ItemList, Person, MovieUser
+from movie.models import Movie, ItemList, Person, Activity
 from rest_framework import serializers
+from users.serializers import WebUserSerializer
 
 
 class PersonSerializer(serializers.ModelSerializer):
@@ -8,15 +9,13 @@ class PersonSerializer(serializers.ModelSerializer):
         fields = ('name', 'slug')
 
 
-class MovieUserSerializer(serializers.ModelSerializer):
+class SimpleMovieSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MovieUser
-        fields = ('watched', 'owned', 'liked', 'disliked', 'favorited')
+        model = Movie
+        fields = ('id', 'title', 'year', 'slug')
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    watched = serializers.BooleanField()
-    owned = serializers.BooleanField()
     user_data = serializers.Field()
 
     class Meta:
@@ -41,10 +40,8 @@ class ListSerializer(serializers.ModelSerializer):
 
 class FullMovieSerializer(serializers.ModelSerializer):
     directors = PersonSerializer(many=True)
-    watched = serializers.BooleanField()
-    owned = serializers.BooleanField()
-    user_data = MovieUserSerializer()
     list_items = ListSerializer(many=True)
+    user_data = serializers.Field()
 
     class Meta:
         model = Movie
@@ -58,3 +55,11 @@ class FullPersonSerializer(serializers.ModelSerializer):
         model = Person
         fields = ('name', 'slug', 'directions')
 
+
+class ActivitySerializer(serializers.ModelSerializer):
+    user = WebUserSerializer()
+    movie = SimpleMovieSerializer()
+
+    class Meta:
+        model = Activity
+        fields = ('user', 'movie', 'activity_type', 'timestamp')

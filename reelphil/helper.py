@@ -11,7 +11,7 @@ def resource_to_json(resource):
 
 def serialize(serializer, **kwargs):
     if kwargs:
-        obj = serializer.Meta.model.objects.get(**kwargs)
+        obj = serializer.Meta.model.objects.filter(**kwargs)
     else:
         obj = serializer.Meta.model.objects.all()
     return serializer(obj).data

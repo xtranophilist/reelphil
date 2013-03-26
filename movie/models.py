@@ -28,7 +28,7 @@ class Movie(models.Model):
     runtime = models.IntegerField(null=True, blank=True)
     slug = models.CharField(max_length=765)
     directors = models.ManyToManyField(Person, related_name='directions')
-    users = models.ManyToManyField(User, through='MovieUser', related_name='movie_user_data')
+    # users = models.ManyToManyField(User, through='MovieUser', related_name='movie_user_data')
 
     def get_user_data(self):
         current_user = tl.get_current_user()
@@ -43,12 +43,6 @@ class Movie(models.Model):
         return self.title + ' (' + str(self.year) + ')'
 
     def checkin(self, user):
-        # current_user = tl.get_current_user()
-        # checkin = Checkin(user=current_user, item_id=self.id, item_type=1)
-        # checkin.save()
-        # mu = MovieUser.objects.get(movie=self, user=current_user)
-        # mu.watched = True
-        # mu.save()
         activity = Activity(movie=self, user=user, activity_type=6)
         activity.save()
 
@@ -65,35 +59,6 @@ class Activity(models.Model):
     class Meta:
         db_table = u'activity'
         unique_together = (('movie', 'user', 'activity_type'),)
-
-
-class MovieUser(models.Model):
-    movie = models.ForeignKey(Movie)
-    user = models.ForeignKey(User)
-    owned = models.BooleanField()
-    liked = models.BooleanField()
-    disliked = models.BooleanField()
-    favorited = models.BooleanField()
-    watched = models.BooleanField()
-    owned_date = models.DateTimeField(blank=True)
-    liked_date = models.DateTimeField(blank=True)
-    disliked_date = models.DateTimeField(blank=True)
-    favorited_date = models.DateTimeField(blank=True)
-    watched_date = models.DateTimeField(blank=True)
-
-    # def __init__(self, *args, **kwargs):
-    #     super(MovieUser, self).__init__(*args, **kwargs)
-    #     self.__original_values = {'owned': self.owned, 'liked': self.liked, 'disliked': self.disliked, 'favorited': self.favorited, 'watched': self.watched}
-
-    # def save(self):
-    #     print self.__original_values
-    #     instance = super(MovieUser, self)
-    #     print self.liked
-    #     instance.save()
-    #     return instance
-
-    class Meta:
-        db_table = u'movie_user'
 
 
 class MovieInfo(models.Model):
