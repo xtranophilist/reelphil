@@ -59,7 +59,8 @@ class FullPersonSerializer(serializers.ModelSerializer):
 class ActivitySerializer(serializers.ModelSerializer):
     user = WebUserSerializer()
     movie = SimpleMovieSerializer()
+    act = serializers.Field(source='activity_type')
 
     class Meta:
         model = Activity
-        fields = ('user', 'movie', 'activity_type', 'timestamp')
+        fields = ('id', 'user', 'movie', 'act', 'timestamp')

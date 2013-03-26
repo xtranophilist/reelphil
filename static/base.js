@@ -3,6 +3,44 @@ function Movie(name) {
     self.name = name;
 }
 
+
+
+function ActivitiesViewModel(activities){
+    var self = this;
+    self.activities = ko.observableArray(ko.utils.arrayMap(activities, function(item) {
+        return new ActivityModel(item);
+    }));
+
+    self.deleteActivity = function(activity){
+        $.ajax({
+                url: '/ajax/delete/',
+                type: 'POST',
+                data: {
+                    id: activity.id
+                },
+
+                success: function(message){
+                    console.log('Success deleting the activity');
+                    self.activities.remove(activity);
+                },
+                error: function(message){
+                    console.error('Failed deleting the activity');
+                }
+
+            });
+    };
+}
+
+function ActivityModel(activity){
+    var self = this;
+
+    for(var k in activity)
+        self[k]=activity[k];
+    self.act_text = {1:'owned', 2:'watched', 3:'liked', 4:'disliked', 5:'favorited', 6:'checked-in to'}[self.act];
+
+}
+
+
 function ProfileModel(profile){
     var self = this;
     self.id = profile.user.id;
@@ -44,8 +82,6 @@ function ProfileModel(profile){
             return 'oblivious';
         });
     }
-    console.log(self);
-
 }
 
 function MovieModel(movie){
@@ -213,7 +249,7 @@ ko.bindingHandlers.follow = {
                 }
 
             });
-        });
+});
         //find relation between the logged in user and user of the profile
 
 

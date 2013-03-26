@@ -11,24 +11,33 @@ $(document).ready(function () {
     {% load filters %}
     data = {{profile|jsonify}};
     data.current_user = {{user|user_to_json}};
-    ko.applyBindings(new ProfileModel(data));
+
+    ko.applyBindings(new ProfileModel(data), document.getElementById('profile_data'));
+    ko.applyBindings(new ActivitiesViewModel({{timeline|jsonify}}), document.getElementById('activity_data'));
+
 });
 </script>
 {% endblock %}
 
 {% block content %}
 
-<h3>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
+<div id='profile_data'>
+    <h3>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
 
-<div class="follow">
-    <span data-bind="follow: relation()"></span>
+    <div class="follow">
+        <span data-bind="follow: relation()"></span>
+    </div>
+
+    <p><a href="/user/edit/">{% trans "Edit Profile" %}</a></p>
+    <p><a href="/user/password/reset/">{% trans "Reset Password" %}</a></p>
+
+    {{profile|jsonify}}
+
 </div>
 
-<p><a href="/user/edit/">{% trans "Edit Profile" %}</a></p>
-<p><a href="/user/password/reset/">{% trans "Reset Password" %}</a></p>
 
-{{profile|jsonify}}
 
-{% include "activity.html" %}
+    {% include "activity.html" %}
+
 
 {% endblock %}

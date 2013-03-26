@@ -7,5 +7,6 @@ urlpatterns = patterns('',
                         url(r'^movie/checkin/$', 'ajax.views.checkin'),
                         url(r'^follow/$', 'ajax.views.follow'),
                         url(r'^unfollow/$', 'ajax.views.unfollow'),
+                        url(r'^delete/$', 'ajax.views.delete'),
                         # url(r'^(?P<model>[a-z]+)/$', 'ajax.views.generic_handler'),
                        )

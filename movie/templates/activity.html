@@ -1,9 +1,23 @@
 {% load filters %}
 
-<h3>Recent Activity:</h3>
+{{timeline|jsonify}}
 
-{{timeline}}
+<div id='activity_data'>
 
-{# {{web_user|get_recent_activity}} #}
-<br/>
 
+    <h3>Recent Activity:</h3>
+
+    <div data-bind="foreach: activities">
+    <div class="activity">
+        <span data-bind="text: user.username"></span>
+        <span data-bind="text: act_text"></span>
+        <span data-bind="text: movie.title"></span>
+        <a data-bind="click: $root.deleteActivity" href="javascript:void()">Del</a>
+    </div>
+
+    </div>
+
+    <br/>
+
+
+</div>

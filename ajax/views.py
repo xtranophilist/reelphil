@@ -61,3 +61,11 @@ def unfollow(request):
         profile = Profile.objects.get(user=user)
         profile.following.remove(Profile.objects.get(user=User.objects.get(username=request.POST['user'])))
         return json_response({'result': 'success'})
+
+
+@csrf_exempt
+def delete(request):
+    if request.method == 'POST':
+        activity = Activity.objects.get(id=int(request.POST['id']))
+        activity.delete()
+        return json_response({'result': 'success'})
