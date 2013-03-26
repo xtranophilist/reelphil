@@ -37,7 +37,7 @@ function ActivityModel(activity){
     for(var k in activity)
         self[k]=activity[k];
     self.act_text = {1:'owned', 2:'watched', 3:'liked', 4:'disliked', 5:'favorited', 6:'checked-in to'}[self.act];
-
+    self.movie.full_title = self.movie.title+' ('+self.movie.year+')';
 }
 
 

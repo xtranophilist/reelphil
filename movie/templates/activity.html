@@ -1,23 +1,16 @@
 {% load filters %}
 
-{{timeline|jsonify}}
-
 <div id='activity_data'>
-
 
     <h3>Recent Activity:</h3>
 
     <div data-bind="foreach: activities">
-    <div class="activity">
-        <span data-bind="text: user.username"></span>
-        <span data-bind="text: act_text"></span>
-        <span data-bind="text: movie.title"></span>
-        <a data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Del</a>
+        <div class="activity">
+            <a data-bind="text: user.username, attr: {'href':  '/user/' + user.username}"></a>
+            <span data-bind="text: act_text"></span>
+            <a data-bind="text: movie.title, attr: {'href':  '/movie/' + movie.slug, title: movie.full_title }"></a>
+            <span data-bind="text: timestamp"></span>
+            <a data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Del</a>
+        </div>
     </div>
-
-    </div>
-
-    <br/>
-
-
 </div>
