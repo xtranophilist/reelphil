@@ -11,9 +11,10 @@ $(document).ready(function () {
     {% load filters %}
     data = {{profile|jsonify}};
     data.current_user = {{user|user_to_json}};
-
     ko.applyBindings(new ProfileModel(data), document.getElementById('profile_data'));
-    ko.applyBindings(new ActivitiesViewModel({{timeline|jsonify}}), document.getElementById('activity_data'));
+    activity_data = {{timeline|jsonify}};
+    activity_data.current_user = {{user|user_to_json}};
+    ko.applyBindings(new ActivitiesViewModel(activity_data), document.getElementById('activity_data'));
 
 });
 </script>

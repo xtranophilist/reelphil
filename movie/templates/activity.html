@@ -12,7 +12,7 @@
         <span data-bind="text: user.username"></span>
         <span data-bind="text: act_text"></span>
         <span data-bind="text: movie.title"></span>
-        <a data-bind="click: $root.deleteActivity" href="javascript:void()">Del</a>
+        <a data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Del</a>
     </div>
 
     </div>

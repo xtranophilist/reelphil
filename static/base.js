@@ -10,7 +10,7 @@ function ActivitiesViewModel(activities){
     self.activities = ko.observableArray(ko.utils.arrayMap(activities, function(item) {
         return new ActivityModel(item);
     }));
-
+    self.current_user = activities.current_user;
     self.deleteActivity = function(activity){
         $.ajax({
                 url: '/ajax/delete/',
