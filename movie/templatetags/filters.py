@@ -5,6 +5,7 @@ from django.template import Library
 from django.utils.safestring import mark_safe
 from movie.models import Checkin, Activity
 from django.db.models import Model
+# from django.forms.models import model_to_dict
 
 register = Library()
 
@@ -15,17 +16,17 @@ def jsonify(object):
         return serialize('json', object)
     if isinstance(object, Model):
         return mark_safe(serialize('json', [object, ]))
-    print isinstance(object, Model)
     return mark_safe(simplejson.dumps(object))
 
 
 @register.filter
-def wake(obj):
-    if hasattr(obj, '_wrapped') and hasattr(obj, '_setup'):
-            if obj._wrapped.__class__ == object:
-                obj._setup()
-            obj = obj._wrapped
-    return obj
+def user_to_json(user):
+    if hasattr(user, '_wrapped') and hasattr(user, '_setup'):
+            if user._wrapped.__class__ == object:
+                user._setup()
+            user = user._wrapped
+    user_dict = {'id': user.id, 'username': user.username}
+    return mark_safe(simplejson.dumps(user_dict))
 
 
 @register.filter

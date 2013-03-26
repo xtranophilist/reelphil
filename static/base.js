@@ -9,35 +9,43 @@ function ProfileModel(profile){
     self.username = profile.user.username;
     if (profile.current_user)
         self.current_user = profile.current_user;
-    if (profile.followers)
+    if (profile.following){
+
         self.followers = ko.utils.arrayMap(profile.followers, function(profile) {
             return new ProfileModel(profile);
         });
-    if (profile.following)
+
         self.following = ko.utils.arrayMap(profile.following, function(profile) {
             return new ProfileModel(profile);
         });
 
-    if (profile.following){
+        self.is_followed = ko.computed(function() {
+            for (var j in self.followers){
+                if (self.current_user.username == self.followers[j].username)
+                    return true;
+            }
+            return false;
+        });
+
+        self.follows = ko.computed(function() {
+            for (var k in self.following){
+                if (self.current_user.username == self.following[k].username)
+                    return true;
+            }
+            return false;
+        });
+
         self.relation = ko.computed(function() {
             if (self.current_user.username == self.username)
                 return 'self';
-            var is_followed = false;
-            var followed_by = false;
-            for (var j in self.followers){
-                if (self.current_user.username == self.followers[j].username)
-                    followed_by = true;
-            }
-            for (var k in self.following){
-                if (self.current_user.username == self.following[k].username)
-                    is_followed = true;
-            }
-            if (is_followed && followed_by) return 'mutual';
-            if (is_followed) return 'following';
-            if (followed_by) return 'follows';
+            if (self.is_followed() && self.follows()) return 'mutual';
+            if (self.is_followed()) return 'is_followed';
+            if (self.follows()) return 'follows';
             return 'oblivious';
         });
     }
+    console.log(self);
+
 }
 
 function MovieModel(movie){
@@ -66,7 +74,6 @@ function MovieModel(movie){
         else
             self[user_data[key]] = ko.observable(false);
     }
-    console.log(self);
     self.docheckin = function(data, el){
         el.target.innerHTML = 'Checking in ...';
         $.ajax({
@@ -108,14 +115,11 @@ function ListViewModel(data, list_container) {
 
 function MovieViewModel(data) {
     var self = this;
-    console.log(data);
-
     for(var k in data)
         self[k]=data[k];
     // self.items = ko.utils.arrayMap(data.items, function(item) {
     //     return new MovieModel(item);
     // });
-    // console.log(self);
 
 }
 
@@ -160,14 +164,13 @@ ko.bindingHandlers.toggle = {
 
 ko.bindingHandlers.follow = {
     init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-        text = {'oblivious':'Follow!', 'self': 'That\'s you!', 'mutual': 'Following each other!', 'following': 'You follow!', 'follows': 'Follows you!'};
-        $(element).html(text[viewModel.relation()]);
+
         $(element).hover(
             function(){
                 var hover_text = '';
                 if (viewModel.relation() == 'self')
                     return;
-                if (viewModel.relation() == 'mutual' || viewModel.relation() == 'following')
+                if (viewModel.is_followed())
                     hover_text = 'Unfollow!';
                 else
                     hover_text = 'Follow!';
@@ -179,36 +182,38 @@ ko.bindingHandlers.follow = {
             );
 
         $(element).click(function() {
-            console.log('hiya');
+            $(element).html('...');
+            if (viewModel.relation() == 'self') return;
+            action = (viewModel.is_followed())? 'unfollow' : 'follow';
+            $.ajax({
+                url: '/ajax/'+action+'/',
+                type: 'POST',
+                data: {
+                    user: viewModel.username
+                },
 
-            // alert (1);
-            // var value = valueAccessor();
-            // value(element.checked);
-            // model_name = viewModel.constructor.name.replace('Model','').toLowerCase();
-            // className = element.className;
-            // $(element).addClass('loading');
-            // $.ajax({
-            //     url: '/ajax/'+model_name+'/',
-            //     type: 'POST',
-            //     data: {
-            //         id: viewModel.id,
-            //         attr: className,
-            //         value: element.checked
-            //     },
+                success: function(message){
+                    if (action=='follow'){
+                        $(element).html('Followed!');
+                        $(element).off('mouseenter mouseleave');
+                        $(element).off('click');
+                    }
+                    if (action=='unfollow'){
+                        $(element).html('Unfollowed!');
+                        $(element).off('mouseenter mouseleave');
+                        $(element).off('click');
+                    }
+                },
+                error: function(message){
+                    // $(element).removeClass('loading');
+                    // //toggle back the checkbox
+                    // $(element).prop('checked', !$(element).prop('checked'));
+                    // alert(message);
+                    console.log('unsuccess');
+                }
 
-            //     success: function(message){
-            //         $(element).removeClass('loading');
-
-            //     },
-            //     error: function(message){
-            //         $(element).removeClass('loading');
-            //         //toggle back the checkbox
-            //         $(element).prop('checked', !$(element).prop('checked'));
-            //         alert(message);
-            //     }
-
-            // });
-});
+            });
+        });
         //find relation between the logged in user and user of the profile
 
 
@@ -217,5 +222,7 @@ ko.bindingHandlers.follow = {
         //on update of observable change checkbox
         // var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
         // element.checked = valueUnwrapped;
+        text = {'oblivious':'Follow!', 'self': 'That\'s you!', 'mutual': 'Following each other!', 'is_followed': 'You follow!', 'follows': 'Follows you!'};
+        $(element).html(text[viewModel.relation()]);
     }
 };

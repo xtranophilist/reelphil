@@ -10,7 +10,7 @@
 $(document).ready(function () {
     {% load filters %}
     data = {{profile|jsonify}};
-    data.current_user = {{user|wake|jsonify}}[0].fields;
+    data.current_user = {{user|user_to_json}};
     ko.applyBindings(new ProfileModel(data));
 });
 </script>
