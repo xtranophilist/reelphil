@@ -40,7 +40,7 @@ def movie(request):
 def checkin(request):
     if request.method == 'POST':
         movie = Movie.objects.get(id=request.POST['id'])
-        movie.checkin()
+        movie.checkin(request.user)
         return json_response({'result': 'success'})
 
 

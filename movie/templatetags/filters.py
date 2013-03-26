@@ -61,3 +61,5 @@ def get_recent_activity(user, num=5):
         item = checkin.movie
         all_activities.append([act, item, time])
     return all_activities
+
+

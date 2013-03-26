@@ -6,6 +6,8 @@ from users.forms import ProfileForm
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from users.serializers import ProfileSerializer
+# from movie.serializers import TimelineSerializer
+from reelphil import helper
 
 
 def web_login(request, **kwargs):
@@ -28,7 +30,8 @@ def profile(request, username=None):
     except Profile.DoesNotExist:
         raise Http404
     profile_data = ProfileSerializer(profile).data
-    return render(request, 'profiles/profile_detail.html', {"web_user": web_user, "profile": profile_data})
+    timeline = helper.get_recent_activity(web_user, 5)
+    return render(request, 'profiles/profile_detail.html', {"web_user": web_user, "profile": profile_data, 'timeline': timeline})
 
 
 def edit_profile(request):

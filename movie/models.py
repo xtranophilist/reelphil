@@ -42,13 +42,15 @@ class Movie(models.Model):
     def __unicode__(self):
         return self.title + ' (' + str(self.year) + ')'
 
-    def checkin(self):
-        current_user = tl.get_current_user()
-        checkin = Checkin(user=current_user, item_id=self.id, item_type=1)
-        checkin.save()
-        mu = MovieUser.objects.get(movie=self, user=current_user)
-        mu.watched = True
-        mu.save()
+    def checkin(self, user):
+        # current_user = tl.get_current_user()
+        # checkin = Checkin(user=current_user, item_id=self.id, item_type=1)
+        # checkin.save()
+        # mu = MovieUser.objects.get(movie=self, user=current_user)
+        # mu.watched = True
+        # mu.save()
+        activity = Activity(movie=self, user=user, activity_type=6)
+        activity.save()
 
     class Meta:
         db_table = u'movie'
