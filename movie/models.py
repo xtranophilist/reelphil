@@ -69,19 +69,6 @@ class MovieInfo(models.Model):
         db_table = u'movie_info'
 
 
-class Checkin(models.Model):
-    user = models.ForeignKey(User)
-    item_id = models.IntegerField()
-    item_type = models.IntegerField()
-    checktime = models.DateTimeField(auto_now_add=True)
-
-    def movie(self):
-        return Movie.objects.get(id=self.item_id)
-
-    class Meta:
-        db_table = u'checkin'
-
-
 class ItemList(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
