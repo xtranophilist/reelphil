@@ -22,8 +22,6 @@ $(document).ready(function () {
 
 <div id='activity_data'>
 
-    <h3>Recent Activity:</h3>
-
     <div data-bind="foreach: activities">
         <div class="activity">
             <a data-bind="text: user.username, attr: {'href':  '/user/' + user.username}"></a>
@@ -35,8 +33,5 @@ $(document).ready(function () {
     </div>
 </div>
 
-
-
-<p>{{timeline}}</p>
 
 {% endblock %}
