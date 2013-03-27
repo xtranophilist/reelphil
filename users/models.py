@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from movie.models import Checkin
 import os
 
 
@@ -19,38 +18,39 @@ class Profile(models.Model):
     get_absolute_url = models.permalink(get_absolute_url)
 
 
-from social_auth.backends.facebook import FacebookBackend
-from social_auth.backends import google
 from social_auth.signals import socialauth_registered
 
 
 def new_users_handler(sender, user, response, details, **kwargs):
-    user.is_new = True
-    print 'aha'
-    if user.is_new:
-        if "id" in response:
+    profile = Profile(user=user)
+    profile.full_name = details.get('fullname')
+    profile.save()
 
-            from urllib2 import urlopen, HTTPError
-            from django.template.defaultfilters import slugify
-            from django.core.files.base import ContentFile
+    # user.is_new = True
+    # if user.is_new:
+    #     if "id" in response:
 
-            try:
-                url = None
-                if sender == FacebookBackend:
-                    url = "http://graph.facebook.com/%s/picture?type=large" % response["id"]
-                elif sender == google.GoogleOAuth2Backend and "picture" in response:
-                    url = response["picture"]
+    #         from urllib2 import urlopen, HTTPError
+    #         from django.template.defaultfilters import slugify
+    #         from django.core.files.base import ContentFile
 
-                if url:
-                    avatar = urlopen(url)
-                    profile = Profile(user=user)
+    #         try:
+    #             url = None
+    #             if sender == FacebookBackend:
+    #                 url = "http://graph.facebook.com/%s/picture?type=large" % response["id"]
+    #             elif sender == google.GoogleOAuth2Backend and "picture" in response:
+    #                 url = response["picture"]
 
-                    profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))
+    #             if url:
+    #                 avatar = urlopen(url)
+    #                 profile = Profile(user=user)
 
-                    profile.save()
+    #                 profile.profile_photo.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))
 
-            except HTTPError:
-                pass
+    #                 profile.save()
+
+    #         except HTTPError:
+    #             pass
 
     return False
 
