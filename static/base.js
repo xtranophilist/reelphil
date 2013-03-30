@@ -123,6 +123,7 @@ function MovieModel(movie){
                     // upon successful checkin, set watched to true
                     self.watched(true);
                     el.target.innerHTML = 'Checked in!';
+                    $(el.target).off('click');
                 },
                 error: function(message){
                     el.target.innerHTML = 'Checked in failed!';

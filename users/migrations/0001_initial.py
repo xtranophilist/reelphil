@@ -13,13 +13,25 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
             ('full_name', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('profile_image', self.gf('django.db.models.fields.files.ImageField')(max_length=100, null=True, blank=True)),
         ))
         db.send_create_signal(u'users', ['Profile'])
+
+        # Adding M2M table for field following on 'Profile'
+        db.create_table(u'users_profile_following', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('from_profile', models.ForeignKey(orm[u'users.profile'], null=False)),
+            ('to_profile', models.ForeignKey(orm[u'users.profile'], null=False))
+        ))
+        db.create_unique(u'users_profile_following', ['from_profile_id', 'to_profile_id'])
 
 
     def backwards(self, orm):
         # Deleting model 'Profile'
         db.delete_table(u'users_profile')
+
+        # Removing M2M table for field following on 'Profile'
+        db.delete_table('users_profile_following')
 
 
     models = {
@@ -61,8 +73,10 @@ class Migration(SchemaMigration):
         },
         u'users.profile': {
             'Meta': {'object_name': 'Profile'},
+            'following': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'followers'", 'symmetrical': 'False', 'to': u"orm['users.Profile']"}),
             'full_name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'profile_image': ('django.db.models.fields.files.ImageField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'unique': 'True'})
         }
     }

@@ -6,7 +6,6 @@
 <script>
 $(document).ready(function () {
     {% load filters %}
-
     activity_data = {{timeline|jsonify}};
     activity_data.current_user = {{user|user_to_json}};
     ko.applyBindings(new ActivitiesViewModel(activity_data), document.getElementById('activity_data'));

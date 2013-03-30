@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.utils import simplejson
 from django.template import Library
 from django.utils.safestring import mark_safe
-from movie.models import Checkin, Activity
+from movie.models import Activity
 from django.db.models import Model
 # from django.forms.models import model_to_dict
 

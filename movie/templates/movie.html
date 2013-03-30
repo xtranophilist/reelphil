@@ -23,6 +23,16 @@ $(document).ready(function () {
     <span data-bind="click: docheckin">Check-in</span>
 </div>
 
+<br/>
+
+IMDB Rating: <span data-bind="text: rating"></span>
+
+<br/>
+
+Runtime : <span data-bind="text: runtime"></span> minutes
+
+<br/><br/>
+
 <table>
     <tbody>
         <tr>
@@ -51,6 +61,8 @@ $(document).ready(function () {
 </table>
 {% endif %}
 
+<br/>
+
 Director(s):
 <div data-bind="foreach: directors">
     <a data-bind="attr: {'href':  '/person/' + slug, title: name }">
@@ -59,6 +71,8 @@ Director(s):
     <br/>
 </div>
 
+<br/>
+
 Official List(s):
 <div data-bind="foreach: list_items">
     <a data-bind="attr: {'href':  '/list/' + slug, title: description}">
@@ -66,8 +80,6 @@ Official List(s):
     </a>
     <br/>
 </div>
-
-
 
 <p>
     {{movie}}

@@ -44,7 +44,14 @@ class Movie(models.Model):
 
     def checkin(self, user):
         activity = Activity(movie=self, user=user, activity_type=6)
+        self.set_watched(user)
         activity.save()
+
+    def set_watched(self, user):
+        # activity = Activity(movie=self, user=user, activity_type=2)
+        act, created = Activity.objects.get_or_create(movie=self, user=user, activity_type=2)
+        if not created:
+            act.save()
 
     class Meta:
         db_table = u'movie'
@@ -58,7 +65,16 @@ class Activity(models.Model):
 
     class Meta:
         db_table = u'activity'
-        unique_together = (('movie', 'user', 'activity_type'),)
+
+
+class Checkin(models.Model):
+    movie = models.ForeignKey(Movie)
+    user = models.ForeignKey(User)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField()
+
+    class Meta:
+        db_table = u'checkin'
 
 
 class MovieInfo(models.Model):

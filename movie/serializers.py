@@ -45,7 +45,7 @@ class FullMovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ('id', 'title', 'year', 'slug', 'directors', 'user_data', 'list_items')
+        fields = ('id', 'title', 'year', 'slug', 'directors', 'user_data', 'list_items', 'rating', 'runtime')
 
 
 class FullPersonSerializer(serializers.ModelSerializer):

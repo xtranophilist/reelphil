@@ -35,23 +35,25 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(u'movie_directors', ['movie_id', 'person_id'])
 
-        # Adding model 'MovieUser'
-        db.create_table(u'movie_user', (
+        # Adding model 'Activity'
+        db.create_table(u'activity', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('movie', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['movie.Movie'])),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('owned', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('liked', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('disliked', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('favorited', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('watched', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('owned_date', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            ('liked_date', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            ('disliked_date', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            ('favorited_date', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            ('watched_date', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
+            ('activity_type', self.gf('django.db.models.fields.IntegerField')()),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.send_create_signal(u'movie', ['MovieUser'])
+        db.send_create_signal(u'movie', ['Activity'])
+
+        # Adding model 'Checkin'
+        db.create_table(u'checkin', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('movie', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['movie.Movie'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('message', self.gf('django.db.models.fields.TextField')()),
+        ))
+        db.send_create_signal(u'movie', ['Checkin'])
 
         # Adding model 'MovieInfo'
         db.create_table(u'movie_info', (
@@ -60,16 +62,6 @@ class Migration(SchemaMigration):
             ('title_type', self.gf('django.db.models.fields.IntegerField')(default=1, blank=True)),
         ))
         db.send_create_signal(u'movie', ['MovieInfo'])
-
-        # Adding model 'Checkin'
-        db.create_table(u'checkin', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('item_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('item_type', self.gf('django.db.models.fields.IntegerField')()),
-            ('checktime', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-        ))
-        db.send_create_signal(u'movie', ['Checkin'])
 
         # Adding model 'ItemList'
         db.create_table(u'list', (
@@ -103,14 +95,14 @@ class Migration(SchemaMigration):
         # Removing M2M table for field directors on 'Movie'
         db.delete_table('movie_directors')
 
-        # Deleting model 'MovieUser'
-        db.delete_table(u'movie_user')
-
-        # Deleting model 'MovieInfo'
-        db.delete_table(u'movie_info')
+        # Deleting model 'Activity'
+        db.delete_table(u'activity')
 
         # Deleting model 'Checkin'
         db.delete_table(u'checkin')
+
+        # Deleting model 'MovieInfo'
+        db.delete_table(u'movie_info')
 
         # Deleting model 'ItemList'
         db.delete_table(u'list')
@@ -156,12 +148,20 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        u'movie.activity': {
+            'Meta': {'object_name': 'Activity', 'db_table': "u'activity'"},
+            'activity_type': ('django.db.models.fields.IntegerField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'movie': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['movie.Movie']"}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
         u'movie.checkin': {
             'Meta': {'object_name': 'Checkin', 'db_table': "u'checkin'"},
-            'checktime': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'item_id': ('django.db.models.fields.IntegerField', [], {}),
-            'item_type': ('django.db.models.fields.IntegerField', [], {}),
+            'message': ('django.db.models.fields.TextField', [], {}),
+            'movie': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['movie.Movie']"}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'movie.itemlist': {
@@ -190,7 +190,6 @@ class Migration(SchemaMigration):
             'runtime': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '765'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'users': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'movie_user_data'", 'symmetrical': 'False', 'through': u"orm['movie.MovieUser']", 'to': u"orm['auth.User']"}),
             'year': ('django.db.models.fields.IntegerField', [], {})
         },
         u'movie.movieinfo': {
@@ -198,22 +197,6 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'movie': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['movie.Movie']"}),
             'title_type': ('django.db.models.fields.IntegerField', [], {'default': '1', 'blank': 'True'})
-        },
-        u'movie.movieuser': {
-            'Meta': {'object_name': 'MovieUser', 'db_table': "u'movie_user'"},
-            'disliked': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'disliked_date': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            'favorited': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'favorited_date': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'liked': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'liked_date': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            'movie': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['movie.Movie']"}),
-            'owned': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'owned_date': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
-            'watched': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'watched_date': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'})
         },
         u'movie.person': {
             'Meta': {'object_name': 'Person', 'db_table': "u'person'"},
