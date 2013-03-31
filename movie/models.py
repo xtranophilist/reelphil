@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from reelphil.middlewares import ThreadLocal as tl
+from datetime import datetime
 
 
 def timestamp_or_none(user, i, movie):
@@ -43,8 +44,13 @@ class Movie(models.Model):
         return self.title + ' (' + str(self.year) + ')'
 
     def checkin(self, user):
-        activity = Activity(movie=self, user=user, activity_type=6)
-        self.set_watched(user)
+        timestamp = str(datetime.now())
+        activity = Activity(movie=self, user=user, activity_type=6, timestamp=timestamp)
+        try:
+            act = Activity.objects.get(movie=self, user=user, activity_type=2)
+        except Activity.DoesNotExist:
+            act = Activity(movie=self, user=user, activity_type=2, timestamp=timestamp)
+            act.save()
         activity.save()
 
     def set_watched(self, user):
@@ -61,20 +67,26 @@ class Activity(models.Model):
     movie = models.ForeignKey(Movie)
     user = models.ForeignKey(User)
     activity_type = models.IntegerField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()
+    message = models.TextField(blank=True)
 
     class Meta:
         db_table = u'activity'
 
+    def save(self, *args, **kwargs):
+        if self.timestamp is None:
+            self.timestamp = datetime.now()
+        super(Activity, self).save()
 
-class Checkin(models.Model):
-    movie = models.ForeignKey(Movie)
-    user = models.ForeignKey(User)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    message = models.TextField()
 
-    class Meta:
-        db_table = u'checkin'
+# class Checkin(models.Model):
+#     movie = models.ForeignKey(Movie)
+#     user = models.ForeignKey(User)
+#     timestamp = models.DateTimeField()
+#     message = models.TextField()
+
+#     class Meta:
+#         db_table = u'checkin'
 
 
 class MovieInfo(models.Model):
