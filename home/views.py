@@ -8,7 +8,7 @@ from django.db.models.aggregates import Max
 def do_filter(activities):
     ret = []
     for activity in activities:
-        if activity.activity_type is 2 and any(a.timestamp == activity.timestamp for a in ret):
+        if activity.activity_type is 2 and any(a.timestamp == activity.timestamp and a.activity_type is 6 for a in ret):
             pass
         else:
             print activity.timestamp, activity.activity_type
