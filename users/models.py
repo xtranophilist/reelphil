@@ -4,7 +4,7 @@ import os
 
 
 def get_image_path(instance, filename):
-    return os.path.join('static/uploads/profile_images', str(instance.id), filename)
+    return os.path.join('static/uploads/profile_images', filename)
 
 
 class Profile(models.Model):
@@ -16,6 +16,14 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return ('profiles_profile_detail', (), {'username': self.user.username})
     get_absolute_url = models.permalink(get_absolute_url)
+
+    def set_profile_image_from_url(self, url):
+        from urllib2 import urlopen
+        from django.template.defaultfilters import slugify
+        from django.core.files.base import ContentFile
+        import time
+        self.profile_image.save(slugify(self.user.username + str(int(time.time()))) + '.jpg', ContentFile(urlopen(url).read()))
+        self.save()
 
     def __unicode__(self):
         return unicode(self.user)
@@ -30,27 +38,11 @@ def new_users_handler(sender, user, response, details, **kwargs):
     profile = Profile(user=user)
     profile.full_name = details.get('fullname')
 
-    # img_url = 'http://graph.facebook.com/' + response['id'] + '/picture?type=square'
-    # from django.core.files import File
-    # from django.core.files.temp import NamedTemporaryFile
-    # import urllib2
-    # import time
-
-    # img_temp = NamedTemporaryFile(delete=True)
-    # img_temp.write(urllib2.urlopen(img_url).read())
-    # img_temp.flush()
-
-    # img_filename = profile.id+int(time.time())+'.jpg'
-
-    # profile.profile_image.save(img_filename, File(img_temp))
-
     user.is_new = True
     if user.is_new:
         if "id" in response:
 
-            from urllib2 import urlopen, HTTPError
-            from django.template.defaultfilters import slugify
-            from django.core.files.base import ContentFile
+            from urllib2 import HTTPError
 
             try:
                 url = None
@@ -60,10 +52,7 @@ def new_users_handler(sender, user, response, details, **kwargs):
                     url = response["picture"]
 
                 if url:
-                    avatar = urlopen(url)
-                    profile.profile_image.save(slugify(user.username + " social") + '.jpg', ContentFile(avatar.read()))
-
-                    profile.save()
+                    profile.set_profile_image_from_url(url)
 
             except HTTPError:
                 pass
