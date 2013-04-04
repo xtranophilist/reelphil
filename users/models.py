@@ -32,15 +32,20 @@ class Profile(models.Model):
 from social_auth.signals import socialauth_registered
 from social_auth.backends.facebook import FacebookBackend
 from social_auth.backends import google
+from social_auth.backends.twitter import TwitterBackend
 
 
 def new_users_handler(sender, user, response, details, **kwargs):
+
     profile = Profile(user=user)
     profile.full_name = details.get('fullname')
+
+    # http://api.twitter.com/1/users/profile_image/details['screen_name'].json?size=original
 
     user.is_new = True
     if user.is_new:
         if "id" in response:
+            print response
 
             from urllib2 import HTTPError
 
@@ -50,13 +55,16 @@ def new_users_handler(sender, user, response, details, **kwargs):
                     url = "http://graph.facebook.com/%s/picture?type=large" % response["id"]
                 elif sender == google.GoogleOAuth2Backend and "picture" in response:
                     url = response["picture"]
+                if sender == TwitterBackend:
+                    url = "http://api.twitter.com/1/users/profile_image/%s.json?size=original" % response["screen_name"]
 
                 if url:
                     profile.set_profile_image_from_url(url)
+                    pass
 
             except HTTPError:
                 pass
-
+    profile.save()
     return True
 
 socialauth_registered.connect(new_users_handler, sender=None)
