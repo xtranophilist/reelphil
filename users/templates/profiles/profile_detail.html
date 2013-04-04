@@ -25,6 +25,8 @@ $(document).ready(function () {
 <div id='profile_data'>
     <h3>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
 
+    {{profile}}a
+
     <div class="follow">
         <span data-bind="follow: relation()"></span>
     </div>

@@ -5,19 +5,30 @@
 {% block title %} {{ user.username }} on Reelphil {% endblock %}
 
 {% block content %}
+
 <h3>Editing profile for  {{ user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h3>
-    {% if form.errors %}
-    <p class="errorlist">{% trans "Sorry there are corrections needed in your form below:" %} {{ form.non_field_errors }}</p>
-    {% endif %}
-    {% if form.is_multipart %}
-    <form enctype="multipart/form-data" method="post" action=".">{% csrf_token %}
-    {% else %}
-    <form method="post" action=".">{% csrf_token %}
-   {% endif %}
-  {{ form.as_p }}
-   {% if form.instance.email %}
-        Existing email: {{ profile.email }}<br><br>
-   {% endif %}
-        <input type="submit" value="Update" />
-   </form>
+
+{% if form.errors %}
+<p class="errorlist">{% trans "Sorry there are corrections needed in your form below:" %} {{ form.non_field_errors }}</p>
+{% endif %}
+
+<form enctype="multipart/form-data" method="post" action=".">{% csrf_token %}
+
+<div>
+    Full Name: {{form.full_name}}
+</div>
+
+<div>
+    Profile Image: {{form.profile_image}}
+    <a href="http://localhost/{{form.profile_image.value}}" target="_blank">
+        <img src="http://localhost/{{form.profile_image.value}}" alt="Your Profile Image">
+    </a>
+</div>
+
+  {% if form.instance.email %}
+  Existing email: {{ profile.email }}<br><br>
+  {% endif %}
+  <input type="submit" value="Update" />
+</form>
+
 {% endblock %}

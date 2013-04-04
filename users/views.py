@@ -46,5 +46,6 @@ def edit_profile(request):
             form.save()
             return HttpResponseRedirect('/user/')
     else:
+        print profile
         form = ProfileForm(instance=profile)
-    return render(request, 'profiles/edit_profile.html', {"profile": profile, "form": ProfileForm})
+    return render(request, 'profiles/edit_profile.html', {"profile": profile, "form": form})

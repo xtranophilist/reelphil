@@ -20,8 +20,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('users.urls')),
     # url(r'^api/', include(v1_api.urls)),
-    url('^$',  include('home.urls')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url('^$', include('home.urls')),
+    url(r'^api-auth/', include('rest_framework.urls',
+    namespace='rest_framework')),
     url(r'', include('movie.urls')),
 
     )

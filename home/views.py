@@ -2,7 +2,7 @@ from django.shortcuts import render
 from movie.models import Activity
 from movie.serializers import ActivitySerializer
 from django.db.models import Q
-from django.db.models.aggregates import Max
+# from django.db.models.aggregates import Max
 
 
 def do_filter(activities):
@@ -21,7 +21,7 @@ def index(request):
         followings = [following.user for following in request.user.get_profile().following.all()]
         activities = Activity.objects.filter(Q(user__in=followings) | Q(user=request.user)).order_by('-timestamp', '-activity_type')
     else:
-        activities = Activity.objects.all().order_by('-id').annotate(activity_type=Max('activity_type'))
+        activities = Activity.objects.all().order_by('-id')
     activities = do_filter(activities)
     timeline = ActivitySerializer(activities).data
     return render(request, 'home.html', {'timeline': timeline})
