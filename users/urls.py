@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from registration.views import register
-from users.registrationform import UserRegistrationForm
+from users.forms import UserRegistrationForm
 from users.views import web_login
 
 urlpatterns = patterns('',

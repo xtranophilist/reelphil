@@ -77,10 +77,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-SERIALIZATION_MODULES = {
-    'json': 'wadofstuff.django.serializers.json'
-}
-
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '7$t43(%d02y209v3(he5_kgq7cgt6qrgz^ttqx!uv-wq=$bmcl'
 
@@ -144,8 +140,8 @@ INSTALLED_APPS = (
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-    'PAGINATE_BY': 10
+'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+'PAGINATE_BY': 10
 }
 
 AUTHENTICATION_BACKENDS = (
@@ -178,6 +174,20 @@ SOCIAL_AUTH_COMPLETE_URL_NAME     = 'complete'
 LOGIN_ERROR_URL                   = '/login/error/'
 # SOCIAL_AUTH_USER_MODEL            = 'users.CustomUser'
 SOCIAL_AUTH_ERROR_KEY             = 'socialauth_error'
+
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.associate.associate_by_email',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+    'social_auth.backends.pipeline.user.update_user_details'
+    )
+
+
 
 
 AUTH_PROFILE_MODULE = "users.Profile"
