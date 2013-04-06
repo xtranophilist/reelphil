@@ -1,0 +1,9 @@
+Django
+pyscopg2
+django-registration
+South
+django-debug-toolbar
+PIL
+django-social-auth
+djangorestframework
+
