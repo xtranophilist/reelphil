@@ -19,8 +19,11 @@ def create_profile(backend, details, response, social_user, uid, user, *args, **
 
 
 def get_user_avatar(backend, details, response, social_user, uid, user, *args, **kwargs):
-
     profile = user.get_profile()
+
+    if profile.profile_image:
+        return
+
     from urllib2 import HTTPError
 
     print backend.__class__
