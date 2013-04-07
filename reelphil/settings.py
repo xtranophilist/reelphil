@@ -237,6 +237,16 @@ LOGGING = {
 }
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "reelphil.cache.Redis",
+        "LOCATION": "127.0.0.1:6379:1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+        }
+    }
+}
+
 try:
     from settings_secret import *
 except ImportError:

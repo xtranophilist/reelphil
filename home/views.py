@@ -3,6 +3,7 @@ from movie.models import Activity
 from movie.serializers import ActivitySerializer
 from django.db.models import Q
 # from django.db.models.aggregates import Max
+from django.core.cache import cache
 
 
 def do_filter(activities):
@@ -17,6 +18,8 @@ def do_filter(activities):
 
 
 def index(request):
+    print cache.setnx("keya", "value1s")
+    print cache.get("keya")
     if request.user.is_authenticated():
         followings = [following.user for following in request.user.get_profile().following.all()]
         activities = Activity.objects.filter(Q(user__in=followings) | Q(user=request.user)).order_by('-timestamp', '-activity_type')
