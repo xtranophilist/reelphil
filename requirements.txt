@@ -1,6 +1,6 @@
 Django
-pyscopg2
-django-registration
+psycopg2
+pip install https://bitbucket.org/eire1130/django-registration/get/tip.tar.gz
 South
 django-debug-toolbar
 PIL

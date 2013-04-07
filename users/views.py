@@ -8,6 +8,8 @@ from django.http import HttpResponseRedirect
 from users.serializers import ProfileSerializer
 from movie.serializers import ActivitySerializer
 from movie.models import Activity
+from django.contrib.messages.api import get_messages
+from social_auth import __version__ as version
 
 
 def web_login(request, **kwargs):
@@ -49,3 +51,9 @@ def edit_profile(request):
         print profile
         form = ProfileForm(instance=profile)
     return render(request, 'profiles/edit_profile.html', {"profile": profile, "form": form})
+
+
+def auth_error(request):
+    """Error view"""
+    messages = get_messages(request)
+    return render(request, 'auth_error.html', {'version': version, 'messages': messages})

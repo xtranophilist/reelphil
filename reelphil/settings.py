@@ -171,7 +171,7 @@ SOCIAL_AUTH_CREATE_USERS          = True
 SOCIAL_AUTH_FORCE_RANDOM_USERNAME = False
 SOCIAL_AUTH_DEFAULT_USERNAME      = 'socialauth_user'
 SOCIAL_AUTH_COMPLETE_URL_NAME     = 'complete'
-LOGIN_ERROR_URL                   = '/login/error/'
+LOGIN_ERROR_URL                   = '/user/auth-error/'
 # SOCIAL_AUTH_USER_MODEL            = 'users.CustomUser'
 SOCIAL_AUTH_ERROR_KEY             = 'socialauth_error'
 
@@ -184,7 +184,9 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.create_user',
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details'
+    'social_auth.backends.pipeline.user.update_user_details',
+    'users.pipelines.create_profile',
+    'users.pipelines.get_user_avatar'
     )
 
 
