@@ -2,6 +2,10 @@ body {
 background-color: #CCC;
 }
 
+#content{
+    clear: both;
+}
+
 td input {
     transition: transform 200s ease-out;
 }

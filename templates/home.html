@@ -22,7 +22,7 @@ $(document).ready(function () {
 <div id='activity_data'>
 
     <div data-bind="foreach: activities">
-        <div class="activity">
+        <div class="activity row">
             <a data-bind="text: user.username, attr: {'href':  '/user/' + user.username}"></a>
             <span data-bind="text: act_text"></span>
             <a data-bind="text: movie.title, attr: {'href':  '/movie/' + movie.slug, title: movie.full_title }"></a>
