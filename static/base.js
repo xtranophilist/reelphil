@@ -160,6 +160,13 @@ function MovieViewModel(data) {
 
 }
 
+ko.bindingHandlers.relative = {
+    update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var valueUnwrapped = ko.utils.unwrapObservable(valueAccessor());
+        element.innerHTML = moment(valueUnwrapped).fromNow();
+    }
+};
+
 ko.bindingHandlers.toggle = {
     init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         $(element).change(function() {

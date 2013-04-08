@@ -20,7 +20,7 @@ $(document).ready(function () {
 {% if user.is_authenticated %}
 
 <div class="check-in-block">
-    <span data-bind="click: docheckin">Check-in</span>
+    <span data-bind="click: docheckin" class="btn btn-primary">Check-in</span>
 </div>
 
 <br/>
@@ -80,10 +80,5 @@ Official List(s):
     </a>
     <br/>
 </div>
-
-<p>
-    {{movie}}
-
-</p>
 
 {% endblock %}

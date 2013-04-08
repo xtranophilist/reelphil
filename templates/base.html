@@ -5,32 +5,69 @@
     <script src="http://localhost/static/jquery.js"></script>
     <script src="http://localhost/static/ko-debug.js"></script>
     <script src="http://localhost/static/base.js"></script>
+    <script src="http://localhost/static/moment.min.js"></script>
+    <script src="http://localhost/static/bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" type="text/css" href="http://localhost/static/base.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://localhost/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="http://localhost/static/bootstrap/css/custom.css" rel="stylesheet">
     <link href="http://localhost/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
     {% block head_end %}{% endblock %}
 </head>
 <body>
     <header>
-        <div class='navbar'>
-          <div class='nav-collapse' style="height: auto;">
-            <ul class="nav">
-                <li><a href="/">Home</a></li>
-                <li><a href="/movies">Movies</a></li>
-                <li><a href="/lists">Lists</a></li>
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    <li class="active">
+                        <a class="brand" href="/">Reelphil.com</a>
+                    </li>
+                    <li><a href="/movies">Movies</a></li>
+                    <li><a href="/list">List</a></li>
+                </ul>
+                <ul class="nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="nav-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
             </ul>
-        </div>
-    </div>
-    <div class="right">
-        {% if user.is_authenticated %}
-        Logged in as <a href="/user/{{user.username}}">{{user.username}}</a>
-        | <a href="/user/logout">Logout</a>
-        {% else %}
-        <a href="/user/login">Login</a>
-        {% endif %}
-    </div>
+            <ul class="nav pull-right">
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="/user/{{user.username}}" class="dropdown-toggle" data-toggle="dropdown">{{user.username}}
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/user/">View Profile</a></li>
+                        <li><a href="/user/edit/">Edit Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/user/logout">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="/user/login">Login</a></li>
+                {% endif %}
+            </ul>
+            <form class="navbar-search pull-right">
+              <input type="text" class="search-query" placeholder="Search">
+          </form>
+
+      </div>
+
+  </div>
+</div>
 
 </header>
 

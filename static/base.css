@@ -1,9 +1,11 @@
 body {
 background-color: #CCC;
+height: 100%;
 }
 
 #content{
     clear: both;
+    margin: 10px;
 }
 
 td input {
@@ -22,8 +24,14 @@ header, footer{
     background-color: #EEEEEE;
 }
 
+
+
 footer{
     margin-top: 50px;
     text-align: center;
     bottom: 0;
+}
+
+header{
+    margin-bottom: 60px;
 }

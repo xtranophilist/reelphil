@@ -22,13 +22,23 @@ $(document).ready(function () {
 <div id='activity_data'>
 
     <div data-bind="foreach: activities">
-        <div class="activity row">
-            <a data-bind="text: user.username, attr: {'href':  '/user/' + user.username}"></a>
-            <span data-bind="text: act_text"></span>
-            <a data-bind="text: movie.title, attr: {'href':  '/movie/' + movie.slug, title: movie.full_title }"></a>
-            <span data-bind="text: timestamp"></span>
-            <a data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Del</a>
+        <div class="activity row-fluid">
+            <div class="span1">
+                <img src="http://localhost/static/avatar.jpg" />
+            </div>
+            <div class="row-fluid span5">
+                <div class="row-fluid">
+                    <a data-bind="text: user.username, attr: {'href':  '/user/' + user.username}"></a>
+                    <span data-bind="text: act_text"></span>
+                    <a data-bind="text: movie.title, attr: {'href':  '/movie/' + movie.slug, title: movie.full_title }"></a>
+                </div>
+                <div class="row-fluid">
+                    <span class="span3" data-bind="relative: timestamp"></span>
+                    <a class="span1" data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Delete</a>
+                </div>
+            </div>
         </div>
+        <hr>
     </div>
 </div>
 
