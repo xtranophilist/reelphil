@@ -1,3 +1,7 @@
+body {
+background-color: #CCC;
+}
+
 td input {
     transition: transform 200s ease-out;
 }
