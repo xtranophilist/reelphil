@@ -19,46 +19,45 @@ $(document).ready(function () {
     <div>Created by <span data-bind="text: author"></span></div>
 </p>
 
-<table>
-    <tbody data-bind="foreach: items">
-        <tr>
-            <td>
-                <a data-bind="attr: {'href':  '/movie/' + slug, title: name }">
-                    <span data-bind="text: title"></span></td>
-                </a>
-                <td>(<span data-bind="text: year"></span>)</td>
+<div data-bind="foreach: items">
+    <div class="row-fluid">
+        <div class="span3">
+            <a data-bind="attr: {'href':  '/movie/' + slug, title: name }">
+                <span data-bind="text: title"></span>
+            </a>
+            (<span data-bind="text: year"></span>)
+        </div>
 
-                {% if user.is_authenticated %}
-                <td>
-                    <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
-                    <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
-                </td>
-                <td>
-                    <input type="checkbox" class="owned" data-bind="toggle: owned, attr: {'id':  'owned-movie' + id}"/>
-                    <label data-bind="attr: {'for':  'owned-movie' + id}">Owned</label>
-                </td>
-                <td>
-                    <input type="checkbox" class="liked" data-bind="toggle: liked, visible: !disliked() && !favorited(), attr: {'id':  'liked-movie' + id}"/>
-                    <label data-bind="visible: !disliked() && !favorited(), attr: {'for':  'liked-movie' + id}">Liked</label>
-                </td>
-                <td>
-                    <input type="checkbox" class="disliked" data-bind="toggle: disliked, visible: !liked() && !favorited(), attr: {'id':  'disliked-movie' + id}"/>
-                    <label data-bind="visible: !liked() && !favorited(), attr: {'for':  'disliked-movie' + id}">Disliked</label>
-                </td>
-                <td>
-                    <input type="checkbox" class="favorited" data-bind="toggle: favorited, visible: !disliked(), attr: {'id':  'favorited-movie' + id}"/>
-                    <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}">Favorited</label>
-                </td>
+        {% if user.is_authenticated %}
 
-                {% endif %}
-            </tr>
-        </tbody>
-    </table>
+        <div class="span1">
+            <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
+            <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="owned" data-bind="toggle: owned, attr: {'id':  'owned-movie' + id}"/>
+            <label data-bind="attr: {'for':  'owned-movie' + id}">Owned</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="liked" data-bind="toggle: liked, visible: !disliked() && !favorited(), attr: {'id':  'liked-movie' + id}"/>
+            <label data-bind="visible: !disliked() && !favorited(), attr: {'for':  'liked-movie' + id}">Liked</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="disliked" data-bind="toggle: disliked, visible: !liked() && !favorited(), attr: {'id':  'disliked-movie' + id}"/>
+            <label data-bind="visible: !liked() && !favorited(), attr: {'for':  'disliked-movie' + id}">Disliked</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="favorited" data-bind="toggle: favorited, visible: !disliked(), attr: {'id':  'favorited-movie' + id}"/>
+            <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}">Favorited</label>
+        </div>
+        {% endif %}
+    </div>
+    <hr>
+</div>
 
 
-    <p>
-        {{item_list|jsonify}}
-
-    </p>
-
-    {% endblock %}
+{% endblock %}
