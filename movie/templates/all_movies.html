@@ -3,10 +3,62 @@
 
 {% block title %} All Movies {% endblock %}
 
+{% block head_end %}
+<script>
+$(document).ready(function () {
+    {% load filters %}
+    movies = {{movies|jsonify}};
+    data = [];
+    data['items'] = movies
+    console.log(data);
+    ko.applyBindings(new ListViewModel(data));
+
+});
+</script>
+{% endblock %}
+
 {% block content %}
 
-{% load filters %}
+<div data-bind="foreach: items">
+    <div class="row-fluid">
+        <div class="span3">
+            <a data-bind="attr: {'href':  '/movie/' + slug, title: name }">
+                <span data-bind="text: title"></span>
+            </a>
+            (<span data-bind="text: year"></span>)
+        </div>
 
-{{movies|jsonify}}
+        {% if user.is_authenticated %}
+
+        <div class="span1">
+            <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
+            <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="owned" data-bind="toggle: owned, attr: {'id':  'owned-movie' + id}"/>
+            <label data-bind="attr: {'for':  'owned-movie' + id}">Owned</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="liked" data-bind="toggle: liked, visible: !disliked() && !favorited(), attr: {'id':  'liked-movie' + id}"/>
+            <label data-bind="visible: !disliked() && !favorited(), attr: {'for':  'liked-movie' + id}">Liked</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="disliked" data-bind="toggle: disliked, visible: !liked() && !favorited(), attr: {'id':  'disliked-movie' + id}"/>
+            <label data-bind="visible: !liked() && !favorited(), attr: {'for':  'disliked-movie' + id}">Disliked</label>
+        </div>
+
+        <div class="span1">
+            <input type="checkbox" class="favorited" data-bind="toggle: favorited, visible: !disliked(), attr: {'id':  'favorited-movie' + id}"/>
+            <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}">Favorited</label>
+        </div>
+        {% endif %}
+    </div>
+    <hr>
+</div>
+
+
 
 {% endblock %}

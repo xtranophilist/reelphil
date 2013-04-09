@@ -33,7 +33,7 @@ $(document).ready(function () {
                     <a data-bind="text: movie.title, attr: {'href':  '/movie/' + movie.slug, title: movie.full_title }"></a>
                 </div>
                 <div class="row-fluid">
-                    <span class="span3" data-bind="relative: timestamp"></span>
+                    <span class="span4" data-bind="relative: timestamp"></span>
                     <a class="span1" data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Delete</a>
                 </div>
             </div>
