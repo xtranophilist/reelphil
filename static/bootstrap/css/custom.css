@@ -2,3 +2,24 @@ ul.nav li.dropdown:hover > ul.dropdown-menu{
     display: block;
     margin: 0;
 }
+.footer {
+text-align: center;
+padding: 30px 0;
+margin-top: 70px;
+border-top: 1px solid #e5e5e5;
+background-color: #f5f5f5;
+}
+.align-center{
+  text-align: center;
+}
+.movie-list{
+  margin-bottom: 10px
+}
+.movie-table input[type="checkbox"]{
+  float: left;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.movie-table label{
+  float: left;
+}
