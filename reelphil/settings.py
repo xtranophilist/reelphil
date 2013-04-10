@@ -194,6 +194,10 @@ SOCIAL_AUTH_PIPELINE = (
 
 AUTH_PROFILE_MODULE = "users.Profile"
 
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/user/%s/" % u.username,
+}
+
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
 EMAIL_HOST = 'localhost'

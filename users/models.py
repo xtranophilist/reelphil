@@ -14,7 +14,7 @@ class Profile(models.Model):
     profile_image = models.ImageField('Profile Image', upload_to=get_image_path, blank=True, null=True)
 
     def get_absolute_url(self):
-        return ('profiles_profile_detail', (), {'username': self.user.username})
+        return '/user/'+unicode(self.user)
     get_absolute_url = models.permalink(get_absolute_url)
 
     def set_profile_image_from_url(self, url):
@@ -27,3 +27,13 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return unicode(self.user)
+
+
+def createUserProfile(sender, user, request, **kwargs):
+        print "creating profile"
+        profile, created = Profile.objects.get_or_create(user=user)
+        if created:
+            profile.save()
+
+from registration.signals import user_registered
+user_registered.connect(createUserProfile)
