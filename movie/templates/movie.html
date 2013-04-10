@@ -13,14 +13,15 @@ $(document).ready(function () {
 
 {% block content %}
 
-<p>
-    <h1 data-bind="text: full_title"></h1>
-</p>
+<div class="row-fluid">
+<div class="span6">
+
+<h1 data-bind="text: full_title"></h1>
 
 {% if user.is_authenticated %}
 
 <div class="check-in-block">
-    <span data-bind="click: docheckin" class="btn btn-primary">Check-in</span>
+    <a data-bind="click: docheckin" class="btn btn-primary" href="#"><i class="icon-white icon-ok"></i> Check-in</a>
 </div>
 
 <br/>
@@ -33,28 +34,28 @@ $(document).ready(function () {
 
 <br/><br/>
 
-<table>
+<table width='100%' class="movie-table">
     <tbody>
-        <tr>
+        <tr align="center">
             <td>
                 <input type="checkbox" class="watched" data-bind="toggle: watched, attr: {'id':  'watched-movie' + id}"/>
-                <label data-bind="attr: {'for':  'watched-movie' + id}">Watched</label>
+                <label data-bind="attr: {'for':  'watched-movie' + id}"> Watched</label>
             </td>
             <td>
                 <input type="checkbox" class="owned" data-bind="toggle: owned, attr: {'id':  'owned-movie' + id}"/>
-                <label data-bind="attr: {'for':  'owned-movie' + id}">Owned</label>
+                <label data-bind="attr: {'for':  'owned-movie' + id}"> Owned</label>
             </td>
             <td>
                 <input type="checkbox" class="liked" data-bind="toggle: liked, visible: !disliked() && !favorited(), attr: {'id':  'liked-movie' + id}"/>
-                <label data-bind="visible: !disliked() && !favorited(), attr: {'for':  'liked-movie' + id}">Liked</label>
+                <label data-bind="visible: !disliked() && !favorited(), attr: {'for':  'liked-movie' + id}"> Liked</label>
             </td>
             <td>
                 <input type="checkbox" class="disliked" data-bind="toggle: disliked, visible: !liked() && !favorited(), attr: {'id':  'disliked-movie' + id}"/>
-                <label data-bind="visible: !liked() && !favorited(), attr: {'for':  'disliked-movie' + id}">Disliked</label>
+                <label data-bind="visible: !liked() && !favorited(), attr: {'for':  'disliked-movie' + id}"> Disliked</label>
             </td>
             <td>
                 <input type="checkbox" class="favorited" data-bind="toggle: favorited, visible: !disliked(), attr: {'id':  'favorited-movie' + id}"/>
-                <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}">Favorited</label>
+                <label data-bind="visible: !disliked(), attr: {'for':  'favorited-movie' + id}"> Favorited</label>
             </td>
         </tr>
     </tbody>
@@ -79,6 +80,8 @@ $(document).ready(function () {
         <span data-bind="text: name"></span>
     </a>
     <br/>
+</div>
+</div>
 </div>
 
 {% endblock %}
