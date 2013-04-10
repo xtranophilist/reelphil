@@ -189,10 +189,11 @@ SOCIAL_AUTH_PIPELINE = (
     'users.pipelines.get_user_avatar'
     )
 
-
-
-
 AUTH_PROFILE_MODULE = "users.Profile"
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: "/user/%s/" % u.username,
+}
 
 # django-registration settings
 ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window

@@ -3,6 +3,10 @@ background-color: #CCC;
 height: 100%;
 }
 
+.errorlist{
+    color: red;
+}
+
 #content{
     clear: both;
     margin: 10px;
