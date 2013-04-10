@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 import os
+import urllib
+import hashlib
 
 
 def get_image_path(instance, filename):
@@ -25,15 +27,26 @@ class Profile(models.Model):
         self.profile_image.save(slugify(self.user.username + str(int(time.time()))) + '.jpg', ContentFile(urlopen(url).read()))
         self.save()
 
+    def get_gravatar(self):
+        default = "/static/images/default_avatar.jpg"
+        size = 200
+        gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(self.user.email.lower()).hexdigest() + "?"
+        gravatar_url += urllib.urlencode({'d': default, 's': str(size)})
+        return gravatar_url
+
     def __unicode__(self):
         return unicode(self.user)
 
 
-def createUserProfile(sender, user, request, **kwargs):
-        print "creating profile"
+def handle_new_user(sender, user, request, **kwargs):
+        #Create new profile
         profile, created = Profile.objects.get_or_create(user=user)
         if created:
             profile.save()
+        #Get Gravatar
+        profile.set_profile_image_from_url(profile.get_gravatar())
+        profile.save()
+        #Create Thumbnail for Avatar
 
 from registration.signals import user_registered
-user_registered.connect(createUserProfile)
+user_registered.connect(handle_new_user)
