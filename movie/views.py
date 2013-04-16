@@ -5,7 +5,7 @@ from models import Movie, Person, ItemList
 from reelphil.helper import serialize
 
 from rest_framework import generics
-from movie.serializers import FullMovieSerializer, FullListSerializer, FullPersonSerializer
+from movie.serializers import FullMovieSerializer, FullListSerializer, FullPersonSerializer, ListSerializer
 
 
 def movie(request, slug):
@@ -25,6 +25,10 @@ def person(request, slug):
 def item_list(request, slug):
     the_list = FullListSerializer(ItemList.objects.get(slug=slug)).data
     return render(request, 'list.html', {"item_list": the_list})
+
+
+def all_lists(request):
+    return render(request, 'all_lists.html', {"lists": serialize(ListSerializer)})
 
 
 class MovieList(generics.ListCreateAPIView):

@@ -106,11 +106,36 @@ class ItemList(models.Model):
     items = models.ManyToManyField(Movie, through='ListItem', related_name='list_items')
     slug = models.CharField(max_length=255)
 
+    def get_user_data(self):
+        current_user = tl.get_current_user()
+        if current_user.id:
+            return get_list_user_data(self, current_user)
+            # list_user = ListUser(item_list = self, user=current_user)
+            # return dict((activities[i], timestamp_or_none(user=current_user, i=i, movie=self)) for i in range(1, 6))
+        return None
+
+    user_data = property(get_user_data)
+
     def __unicode__(self):
         return self.name
 
     class Meta:
         db_table = u'list'
+
+
+class ListUser(models.Model):
+    item_list = models.ForeignKey(ItemList)
+    user = models.ForeignKey(User)
+    on_watchlist = models.BooleanField(default=False)
+    favorited = models.BooleanField(default=False)
+
+
+def get_list_user_data(item_list, user):
+    try:
+        list_user = ListUser.objects.get(item_list=item_list, user=user)
+        return {'on_watchlist': list_user.on_watchlist, 'favorited': list_user.favorited}
+    except ListUser.DoesNotExist:
+        return None
 
 
 class ListItem(models.Model):

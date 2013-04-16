@@ -150,6 +150,25 @@ function ListViewModel(data, list_container) {
     });
 }
 
+function ListListModel(data) {
+    var self = this;
+    for(var k in data)
+        self[k]=data[k];
+    self['items'] = ko.utils.arrayMap(data['items'], function(item) {
+        return new ListItemModel(item);
+    });
+    console.log(self);
+}
+
+function ListItemModel(data){
+    // console.log(data);
+    var self = this;
+    for(var k in data)
+        self[k]=data[k];
+    self['on_watchlist'] = ko.observable(data['user_data']['on_watchlist']);
+    self['favorited'] = ko.observable(data['user_data']['favorited']);
+}
+
 function MovieViewModel(data) {
     var self = this;
     for(var k in data)
@@ -172,6 +191,7 @@ ko.bindingHandlers.toggle = {
         $(element).change(function() {
             //onchange of checkbox update observable
             var value = valueAccessor();
+            console.log(valueAccessor())
             value(element.checked);
             model_name = viewModel.constructor.name.replace('Model','').toLowerCase();
             className = element.className;

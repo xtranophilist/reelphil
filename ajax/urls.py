@@ -5,6 +5,7 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns('',
                         url(r'^movie/$', 'ajax.views.movie'),
                         url(r'^movie/checkin/$', 'ajax.views.checkin'),
+                        url(r'^listitem/$', 'ajax.views.list_item'),
                         url(r'^follow/$', 'ajax.views.follow'),
                         url(r'^unfollow/$', 'ajax.views.unfollow'),
                         url(r'^delete/$', 'ajax.views.delete'),

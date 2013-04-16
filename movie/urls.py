@@ -10,6 +10,7 @@ urlpatterns = patterns('',
                        url(r'^movies/$', 'movie.views.all_movies'),
                        url(r'^movie/(?P<slug>[a-zA-Z0-9_.-]+)/$', 'movie.views.movie'),
                        url(r'^person/(?P<slug>[a-zA-Z0-9_.-]+)/$', 'movie.views.person'),
+                       url(r'^lists/$', 'movie.views.all_lists'),
                        url(r'^list/(?P<slug>[a-zA-Z0-9_.-]+)/$', 'movie.views.item_list'),
                        )
 

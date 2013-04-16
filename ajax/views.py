@@ -69,3 +69,16 @@ def delete(request):
         activity = Activity.objects.get(id=int(request.POST['id']))
         activity.delete()
         return json_response({'result': 'success'})
+
+
+@csrf_exempt
+def list_item(request):
+    if request.method == 'POST':
+        # list_user = ListUser(user=request.user, list_id=request.POST['id'])
+        list_user, created = ListUser.objects.get_or_create(user=request.user, item_list_id=request.POST['id'])
+        if request.POST['attr'] == 'on_watchlist':
+            list_user.on_watchlist = str2bool(request.POST['value'])
+        elif request.POST['attr'] == 'favorited':
+            list_user.favorited = str2bool(request.POST['value'])
+        list_user.save()
+        return json_response({'result': 'success'})
