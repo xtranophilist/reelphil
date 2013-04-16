@@ -148,6 +148,8 @@ function ListViewModel(data, list_container) {
     self[list_container] = ko.utils.arrayMap(data[list_container], function(item) {
         return new MovieModel(item);
     });
+    self['on_watchlist'] = ko.observable(data['user_data']['on_watchlist']);
+    self['favorited'] = ko.observable(data['user_data']['favorited']);
 }
 
 function ListListModel(data) {

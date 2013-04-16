@@ -26,10 +26,11 @@ class MovieSerializer(serializers.ModelSerializer):
 class FullListSerializer(serializers.ModelSerializer):
     author = serializers.RelatedField()
     items = MovieSerializer()
+    user_data = serializers.Field()
 
     class Meta:
         model = ItemList
-        fields = ('name', 'description', 'author', 'items')
+        fields = ('id', 'name', 'description', 'author', 'items', 'user_data')
 
 
 class ListSerializer(serializers.ModelSerializer):

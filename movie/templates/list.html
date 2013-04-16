@@ -8,12 +8,27 @@ $(document).ready(function () {
     data = {{item_list|jsonify}};
     ko.applyBindings(new ListViewModel(data));
 });
+
 </script>
 {% endblock %}
 
 {% block content %}
 
 <p>
+    {% if user.is_authenticated %}
+    <div class="pull-right">
+
+        <div class="span1 align-center">
+            <input type="checkbox" class="on_watchlist" data-bind="toggle: on_watchlist, attr: {'id':  'on_watchlist-list' + id}"/>
+            <label data-bind="attr: {'for':  'on-watchlist-list' + id}">On Watchlist</label>
+        </div>
+
+        <div class="span1 align-center">
+            <input type="checkbox" class="favorited" data-bind="toggle: favorited, attr: {'id':  'favorited-list' + id}"/>
+            <label data-bind="attr: {'for':  'favorited-list' + id}">Favorited</label>
+        </div>
+    </div>
+    {% endif %}
     <h1 data-bind="text: name"></h1>
     <div data-bind="text: description"></div>
     <div>Created by <span data-bind="text: author"></span></div>
