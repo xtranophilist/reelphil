@@ -13,21 +13,21 @@ function ActivitiesViewModel(activities){
     self.current_user = activities.current_user;
     self.deleteActivity = function(activity){
         $.ajax({
-                url: '/ajax/delete/',
-                type: 'POST',
-                data: {
-                    id: activity.id
-                },
+            url: '/ajax/delete/',
+            type: 'POST',
+            data: {
+                id: activity.id
+            },
 
-                success: function(message){
-                    console.log('Success deleting the activity');
-                    self.activities.remove(activity);
-                },
-                error: function(message){
-                    console.error('Failed deleting the activity');
-                }
+            success: function(message){
+                console.log('Success deleting the activity');
+                self.activities.remove(activity);
+            },
+            error: function(message){
+                console.error('Failed deleting the activity');
+            }
 
-            });
+        });
     };
 }
 
@@ -148,8 +148,9 @@ function ListViewModel(data, list_container) {
     self[list_container] = ko.utils.arrayMap(data[list_container], function(item) {
         return new MovieModel(item);
     });
-    self['on_watchlist'] = ko.observable(data['user_data']['on_watchlist']);
-    self['favorited'] = ko.observable(data['user_data']['favorited']);
+    if (self[list_container].length===0){
+        $('#list-container').html('No movies found!');
+    }
 }
 
 function ListListModel(data) {
@@ -159,11 +160,12 @@ function ListListModel(data) {
     self['items'] = ko.utils.arrayMap(data['items'], function(item) {
         return new ListItemModel(item);
     });
-    console.log(self);
+    if (self.items.length===0){
+        $('#list-container').html('No lists found!');
+    }
 }
 
 function ListItemModel(data){
-    // console.log(data);
     var self = this;
     for(var k in data)
         self[k]=data[k];
@@ -193,7 +195,6 @@ ko.bindingHandlers.toggle = {
         $(element).change(function() {
             //onchange of checkbox update observable
             var value = valueAccessor();
-            console.log(valueAccessor())
             value(element.checked);
             model_name = viewModel.constructor.name.replace('Model','').toLowerCase();
             className = element.className;

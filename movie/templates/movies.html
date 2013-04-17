@@ -10,19 +10,19 @@ $(document).ready(function () {
     movies = {{movies|jsonify}};
     data = [];
     data['items'] = movies
-    console.log(data);
     ko.applyBindings(new ListViewModel(data));
-
 });
 </script>
 {% endblock %}
 
 {% block content %}
 
-<h1> All Movies </h1>
+<h1> {{header}} </h1>
 <br/>
 
-{% include "movies_list.html" %}
+<div id="list-container">
+    {% include "movies_list.html" %}
+</div>
 
 
 {% endblock %}

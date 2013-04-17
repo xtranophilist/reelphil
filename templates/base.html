@@ -31,15 +31,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/movies">All Movies</a></li>
-                        <li><a href="/movies/popular">Most Popular</a></li>
                         <li class="divider"></li>
                         <li class="nav-header">{{user.username}}'s</li>
                         <li><a href="/movies/watched/{{user.username}}/">Watched Movies</a></li>
-                        <li><a href="/movies/unwatched/{{user.username}}/">Unwatched Movies</a></li>
                         <li><a href="/movies/owned/{{user.username}}/">Owned Movies</a></li>
                         <li><a href="/movies/liked/{{user.username}}/">Liked Movies</a></li>
                         <li><a href="/movies/disliked/{{user.username}}/">Disliked Movies</a></li>
-                        <li><a href="/movies/favorite/{{user.username}}/">Favorite Movies</a></li>
+                        <li><a href="/movies/favorited/{{user.username}}/">Favorite Movies</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -48,33 +46,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/lists">All Lists</a></li>
-                        <li><a href="/movies/popular">Most Popular</a></li>
                         <li class="divider"></li>
                         <li class="nav-header">{{user.username}}'s</li>
-                        <li><a href="/movies/watched/{{user.username}}/">Watched Movies</a></li>
-                        <li><a href="/movies/unwatched/{{user.username}}/">Unwatched Movies</a></li>
-                        <li><a href="/movies/owned/{{user.username}}/">Owned Movies</a></li>
-                        <li><a href="/movies/liked/{{user.username}}/">Liked Movies</a></li>
-                        <li><a href="/movies/disliked/{{user.username}}/">Disliked Movies</a></li>
-                        <li><a href="/movies/favorite/{{user.username}}/">Favorite Movies</a></li>
+                        <li><a href="/lists/on_watchlist/{{user.username}}/">Watchlists</a></li>
+                        <li><a href="/lists/favorited/{{user.username}}/">Favorited Lists</a></li>
                     </ul>
                 </li>
-                    <li><a href="/list">List</a></li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li class="nav-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-
             </ul>
             <ul class="nav pull-right">
                 <li>
