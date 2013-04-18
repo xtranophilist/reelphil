@@ -26,42 +26,46 @@
                         <a class="brand" href="/">Reelphil.com</a>
                     </li>
                     <li class="dropdown">
-                    <a href="/movies" class="dropdown-toggle" data-toggle="dropdown">Movies
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/movies">All Movies</a></li>
-                        <li class="divider"></li>
-                        <li class="nav-header">{{user.username}}'s</li>
-                        <li><a href="/movies/watched/{{user.username}}/">Watched Movies</a></li>
-                        <li><a href="/movies/owned/{{user.username}}/">Owned Movies</a></li>
-                        <li><a href="/movies/liked/{{user.username}}/">Liked Movies</a></li>
-                        <li><a href="/movies/disliked/{{user.username}}/">Disliked Movies</a></li>
-                        <li><a href="/movies/favorited/{{user.username}}/">Favorite Movies</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="/lists" class="dropdown-toggle" data-toggle="dropdown">Lists
-                        <b class="caret"></b>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/lists">All Lists</a></li>
-                        <li class="divider"></li>
-                        <li class="nav-header">{{user.username}}'s</li>
-                        <li><a href="/lists/on_watchlist/{{user.username}}/">Watchlists</a></li>
-                        <li><a href="/lists/favorited/{{user.username}}/">Favorited Lists</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="nav pull-right">
-                <li>
-                  <form class="navbar-search pull-right" action="/search" method="GET">
-                      <input type="text" class="search-query" placeholder="Search" name="q">
-                      <input type="hidden" name="models" value="movie.movie">
-                  </form>
-                </li>
-                {% if user.is_authenticated %}
-                <li class="dropdown">
+                        <a href="/movies" class="dropdown-toggle" data-toggle="dropdown">Movies
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/movies">All Movies</a></li>
+                            {% if user.is_authenticated %}
+                            <li class="divider"></li>
+                            <li class="nav-header">{{user.username}}'s</li>
+                            <li><a href="/movies/watched/{{user.username}}/">Watched Movies</a></li>
+                            <li><a href="/movies/owned/{{user.username}}/">Owned Movies</a></li>
+                            <li><a href="/movies/liked/{{user.username}}/">Liked Movies</a></li>
+                            <li><a href="/movies/disliked/{{user.username}}/">Disliked Movies</a></li>
+                            <li><a href="/movies/favorited/{{user.username}}/">Favorite Movies</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="/lists" class="dropdown-toggle" data-toggle="dropdown">Lists
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/lists">All Lists</a></li>
+                            {% if user.is_authenticated %}
+                            <li class="divider"></li>
+                            <li class="nav-header">{{user.username}}'s</li>
+                            <li><a href="/lists/on_watchlist/{{user.username}}/">Watchlists</a></li>
+                            <li><a href="/lists/favorited/{{user.username}}/">Favorited Lists</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav pull-right">
+                    <li>
+                      <form class="navbar-search pull-right" action="/search" method="GET">
+                          <input type="text" class="search-query" placeholder="Search" name="q">
+                          <input type="hidden" name="models" value="movie.movie">
+                      </form>
+                  </li>
+                  {% if user.is_authenticated %}
+                  <li class="dropdown">
                     <a href="/user/{{user.username}}" class="dropdown-toggle" data-toggle="dropdown">{{user.username}}
                         <b class="caret"></b>
                     </a>
@@ -77,9 +81,9 @@
                 {% endif %}
             </ul>
 
-      </div>
+        </div>
 
-  </div>
+    </div>
 </div>
 
 </header>
@@ -91,7 +95,7 @@
 <footer class="footer">
   <div class="container">
     <p>Copyleft (ↄ) Reelphil - All Rights REVERSED 2013</p>
-  </div>
+</div>
 </footer>
 
 </body>

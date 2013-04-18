@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
 'PAGINATE_BY': 10
 }
 
-HAYSTACK_SITECONF = 'movie.search_indexes'
+HAYSTACK_SITECONF = 'reelphil.search_indexes'
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), 'search_index')
 

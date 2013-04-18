@@ -6,4 +6,6 @@ django-debug-toolbar
 PIL
 django-social-auth
 djangorestframework
+django-haystack
+Whoosh
 
