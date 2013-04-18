@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load filters %}
+
+{% block title %} {{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} on Reelphil {% endblock %}
+
+{% block head_end %}
+<script>
+$(document).ready(function () {
+    {% load filters %}
+    data = {{profile|jsonify}};
+    data.current_user = {{user|user_to_json}};
+    ko.applyBindings(new ProfileModel(data), document.getElementById('profile_data'));
+    activity_data = {{timeline|jsonify}};
+    activity_data.current_user = {{user|user_to_json}};
+    ko.applyBindings(new ActivitiesViewModel(activity_data), document.getElementById('activity_data'));
+
+});
+</script>
+{% endblock %}
+
+{% block content %}
+
+<div id='profile_data'>
+    <h1>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h1>
+
+    <div class="follow">
+        <span data-bind="follow: relation()" class="btn btn-primary"></span>
+    </div>
+
+</div>
+
+
+<h1> {{web_user}}'s {{header}} </h1>
+
+
+{% endblock %}

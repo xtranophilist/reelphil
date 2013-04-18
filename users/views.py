@@ -57,3 +57,17 @@ def auth_error(request):
     """Error view"""
     messages = get_messages(request)
     return render(request, 'auth_error.html', {'version': version, 'messages': messages})
+
+
+def followers(request, username):
+    try:
+        web_user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        raise Http404
+    try:
+        profile = Profile.objects.get(user=web_user)
+    except Profile.DoesNotExist:
+        raise Http404
+    profile_data = ProfileSerializer(profile).data
+    return render(request, 'profiles/users_list.html', {"web_user": web_user, "profile": profile_data})
+
