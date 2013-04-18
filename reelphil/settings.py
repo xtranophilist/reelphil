@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'debug_toolbar',
+    'haystack',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     )
@@ -143,6 +144,17 @@ REST_FRAMEWORK = {
 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
 'PAGINATE_BY': 10
 }
+
+HAYSTACK_SITECONF = 'movie.search_indexes'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(os.path.dirname(__file__), 'search_index')
+
+
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+#     },
+# }
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',

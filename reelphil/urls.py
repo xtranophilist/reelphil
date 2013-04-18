@@ -19,11 +19,13 @@ urlpatterns = patterns('',
     url(r'^social/', include('social_auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('users.urls')),
+    (r'^search/', include('haystack.urls')),
     # url(r'^api/', include(v1_api.urls)),
     url('^$', include('home.urls')),
     url(r'^api-auth/', include('rest_framework.urls',
     namespace='rest_framework')),
     url(r'', include('movie.urls')),
+
 
     )
 

@@ -59,6 +59,9 @@ class Movie(models.Model):
         if not created:
             act.save()
 
+    def get_absolute_url(self):
+        return '/movie/%s/' % self.slug
+
     class Meta:
         db_table = u'movie'
 
