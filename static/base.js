@@ -169,8 +169,13 @@ function ListItemModel(data){
     var self = this;
     for(var k in data)
         self[k]=data[k];
-    self['on_watchlist'] = ko.observable(data['user_data']['on_watchlist']);
-    self['favorited'] = ko.observable(data['user_data']['favorited']);
+    if (data['user_data']){
+        self['on_watchlist'] = ko.observable(data['user_data']['on_watchlist']);
+        self['favorited'] = ko.observable(data['user_data']['favorited']);
+    }else{
+        self['on_watchlist'] = ko.observable(false);
+        self['favorited'] = ko.observable(false);
+    }
 }
 
 function MovieViewModel(data) {

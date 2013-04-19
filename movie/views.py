@@ -15,7 +15,7 @@ def movie(request, slug):
 
 
 def all_movies(request):
-    return render(request, 'movies.html', {"movies": serialize(FullMovieSerializer)})
+    return render(request, 'movies.html', {"movies": serialize(FullMovieSerializer), "header": "All Movies"})
 
 
 def person(request, slug):

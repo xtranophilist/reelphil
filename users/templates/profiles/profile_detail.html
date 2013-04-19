@@ -14,6 +14,7 @@ $(document).ready(function () {
     ko.applyBindings(new ProfileModel(data), document.getElementById('profile_data'));
     activity_data = {{timeline|jsonify}};
     activity_data.current_user = {{user|user_to_json}};
+    console.log(activity_data);
     ko.applyBindings(new ActivitiesViewModel(activity_data), document.getElementById('activity_data'));
 
 });
@@ -31,11 +32,21 @@ $(document).ready(function () {
         <span data-bind="follow: relation()" class="btn btn-primary"></span>
     </div>
 
+    <ul>
+        <li><a href="/movies/watched/{{web_user.username}}/">Watched Movies</a></li>
+        <li><a href="/movies/owned/{{web_user.username}}/">Owned Movies</a></li>
+        <li><a href="/movies/liked/{{web_user.username}}/">Liked Movies</a></li>
+        <li><a href="/movies/disliked/{{web_user.username}}/">Disliked Movies</a></li>
+        <li><a href="/movies/favorited/{{web_user.username}}/">Favorite Movies</a></li>
+    </ul>
+
 </div>
 
+<h4>Recent Activity</h4>
 
-
-{% include "activity.html" %}
+<div id="activity_data">
+    {% include "activity.html" %}
+</div>
 
 
 {% endblock %}

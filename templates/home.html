@@ -20,26 +20,7 @@ $(document).ready(function () {
 {% load filters %}
 
 <div id='activity_data'>
-
-    <div data-bind="foreach: activities">
-        <div class="activity row-fluid">
-            <div class="span1">
-                <img src="http://localhost/static/avatar.jpg" />
-            </div>
-            <div class="row-fluid span5">
-                <div class="row-fluid">
-                    <a data-bind="text: user.username, attr: {'href':  '/user/' + user.username}"></a>
-                    <span data-bind="text: act_text"></span>
-                    <a data-bind="text: movie.title, attr: {'href':  '/movie/' + movie.slug, title: movie.full_title }"></a>
-                </div>
-                <div class="row-fluid">
-                    <span class="span4" data-bind="relative: timestamp"></span>
-                    <a class="span1" data-bind="click: $root.deleteActivity, visible: $root.current_user.username==user.username" href="javascript:void()">Delete</a>
-                </div>
-            </div>
-        </div>
-        <hr>
-    </div>
+    {% include "activity.html" %}
 </div>
 
 
