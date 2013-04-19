@@ -23,7 +23,7 @@ $(document).ready(function () {
 {% block content %}
 
 <div id='profile_data'>
-    <h1>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h1>
+    <h>{{ web_user.username }} {% if profile.full_name %} ({{ profile.full_name }}) {% endif %} </h1>
 
     <div class="follow">
         <span data-bind="follow: relation()" class="btn btn-primary"></span>
