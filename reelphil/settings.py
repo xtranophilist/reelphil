@@ -134,6 +134,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'debug_toolbar',
     'haystack',
+    'django_extensions',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     )

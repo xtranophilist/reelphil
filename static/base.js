@@ -1,9 +1,16 @@
+$(document).ready(function(){
+    Path.map("/lists").to(function(){
+        console.log("Welcome home!");
+    });
+    Path.history.listen();
+});
+
+
+
 function Movie(name) {
     var self = this;
     self.name = name;
 }
-
-
 
 function ActivitiesViewModel(activities){
     var self = this;
@@ -29,6 +36,10 @@ function ActivitiesViewModel(activities){
 
         });
     };
+    if (self.activities.length===0){
+        console.log('haha')
+        $('#activity_data').html('Whoops! We found nothing to show you here! You need to make new friends!');
+    }
 }
 
 function ActivityModel(activity){
