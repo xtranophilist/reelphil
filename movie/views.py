@@ -2,7 +2,6 @@ from django.shortcuts import render
 from models import Movie, Person, ItemList, Activity, ListUser
 # from tastypie.serializers import Serializer
 # from movie.api import ListResource
-from reelphil.helper import serialize
 from django.contrib.auth.models import User
 
 from rest_framework import generics
@@ -15,7 +14,9 @@ def movie(request, slug):
 
 
 def all_movies(request):
-    return render(request, 'movies.html', {"movies": serialize(FullMovieSerializer), "header": "All Movies"})
+    page = int(request.GET.get('page', 1))
+    movies = FullMovieSerializer(Movie.objects.all()[(page-1)*10:page*10]).data
+    return render(request, 'movies.html', {"movies": movies, "header": "All Movies", "page": page})
 
 
 def person(request, slug):
@@ -29,7 +30,8 @@ def item_list(request, slug):
 
 
 def all_lists(request):
-    return render(request, 'lists.html', {"lists": serialize(ListSerializer), "header": "All Lists"})
+    lists = ListSerializer(ItemList.objects.all()).data
+    return render(request, 'lists.html', {"lists": lists, "header": "All Lists"})
 
 
 def movies(request, activity_type, user=None):

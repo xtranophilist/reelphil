@@ -45,7 +45,7 @@ class Movie(models.Model):
 
     def checkin(self, user):
         timestamp = str(datetime.now())
-        user.get_profile().tweet("I'm watching " + unicode(self) + ". " + self.get_absolute_url() + " via @reelphil_app")
+        user.get_profile().tweet("I'm watching " + unicode(self) + ". http://reelphil.com/" + self.get_absolute_url() + " via @reelphil_app")
         activity = Activity(movie=self, user=user, activity_type=6, timestamp=timestamp)
         try:
             act = Activity.objects.get(movie=self, user=user, activity_type=2)

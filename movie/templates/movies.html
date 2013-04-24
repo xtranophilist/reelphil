@@ -24,5 +24,9 @@ $(document).ready(function () {
     {% include "movies_list.html" %}
 </div>
 
+<a href="/movies/?page={{page|add:"-1"}}">Previous</a>
+<a href="/movies/?page={{page|add:"1"}}">Next</a>
+
+
 
 {% endblock %}

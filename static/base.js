@@ -47,6 +47,7 @@ function ActivityModel(activity){
     for(var k in activity)
         self[k]=activity[k];
     self.act_text = {1:'owned', 2:'watched', 3:'liked', 4:'disliked', 5:'favorited', 6:'checked-in to'}[self.act];
+    console.log(self);
     self.movie.full_title = self.movie.title+' ('+self.movie.year+')';
 }
 
@@ -161,6 +162,11 @@ function ListViewModel(data, list_container) {
     if (self[list_container].length===0){
         $('#list-container').html('No movies found!');
     }
+    if (self.user_data){
+        self.on_watchlist = self.user_data.on_watchlist;
+        self.favorited = self.user_data.favorited;
+    }
+    console.log(self);
 }
 
 function ListListModel(data) {
