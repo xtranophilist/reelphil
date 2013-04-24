@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from social_auth.models import UserSocialAuth
+from reelphil import settings
+import tweepy
 import os
 
 
@@ -27,6 +30,20 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return unicode(self.user)
+
+    def tweet(self, text):
+        try:
+            instance = UserSocialAuth.objects.filter(user=self.user).get()
+            oauth_access_token = (instance.tokens).get('oauth_token')
+
+            oauth_access_secret = (instance.tokens).get('oauth_token_secret')
+
+            auth = tweepy.OAuthHandler(settings.TWITTER_CONSUMER_KEY, settings.TWITTER_CONSUMER_SECRET)
+            auth.set_access_token(oauth_access_token, oauth_access_secret)
+            api = tweepy.API(auth)
+            api.update_status(text)
+        except UserSocialAuth.DoesNotExist:
+            pass
 
 
 def createUserProfile(sender, user, request, **kwargs):

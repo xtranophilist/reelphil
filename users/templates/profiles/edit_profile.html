@@ -31,4 +31,10 @@
   <input type="submit" value="Update" />
 </form>
 
+<p>
+        Integrate social accounts: <a href="{% url 'socialauth_begin' 'twitter' %}">Twitter</a>
+        <a href="{% url 'socialauth_begin' 'facebook' %}">Facebook</a>
+        <a href="{% url 'socialauth_begin' 'google' %}">Google</a>
+    </p>
+
 {% endblock %}

@@ -36,8 +36,7 @@ function ActivitiesViewModel(activities){
 
         });
     };
-    if (self.activities.length===0){
-        console.log('haha')
+    if (self.activities().length===0){
         $('#activity_data').html('Whoops! We found nothing to show you here! You need to make new friends!');
     }
 }
