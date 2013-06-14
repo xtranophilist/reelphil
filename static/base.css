@@ -39,3 +39,13 @@ footer{
 header{
     margin-bottom: 60px;
 }
+
+.or{
+display: inline;
+margin-left: 20px;
+}
+
+.lefty{
+    float:left;
+    display: inline;
+}
