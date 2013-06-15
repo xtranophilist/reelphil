@@ -188,7 +188,7 @@ LOGIN_ERROR_URL                   = '/user/auth-error/'
 # SOCIAL_AUTH_USER_MODEL            = 'users.CustomUser'
 SOCIAL_AUTH_ERROR_KEY             = 'socialauth_error'
 
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+FACEBOOK_EXTENDED_PERMISSIONS = ["email", "publish_stream", "offline_access", "read_stream", "publish_stream", "user_activities", "status_update"]
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',

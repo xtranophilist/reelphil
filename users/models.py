@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from social_auth.models import UserSocialAuth
 from reelphil import settings
 import tweepy
+import facebook
 import os
 
 
@@ -44,6 +45,18 @@ class Profile(models.Model):
                 auth.set_access_token(oauth_access_token, oauth_access_secret)
                 api = tweepy.API(auth)
                 api.update_status(text)
+        except UserSocialAuth.DoesNotExist:
+            pass
+
+    def fb_post(self, text):
+        try:
+            social = self.user.social_auth.filter(provider='facebook')
+            if social:
+                instance = UserSocialAuth.objects.filter(user=self.user).filter()[0]
+                print instance.tokens
+                oauth_access_token = (instance.tokens).get('access_token')
+                graph = facebook.GraphAPI(oauth_access_token)
+                graph.put_object("me", "feed", message=text)
         except UserSocialAuth.DoesNotExist:
             pass
 
