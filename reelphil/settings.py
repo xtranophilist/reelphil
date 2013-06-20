@@ -100,9 +100,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'reelphil.middlewares.ThreadLocal.ThreadLocalMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'reelphil.urls'
 
@@ -135,6 +138,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'haystack',
     'django_extensions',
+    'corsheaders',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     )
@@ -142,7 +146,7 @@ INSTALLED_APPS = (
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 REST_FRAMEWORK = {
-'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+# 'DEFAULT_PERMISSION_CLASSES': ('rest_framework.authentication.SessionAuthentication'),
 'PAGINATE_BY': 10
 }
 
